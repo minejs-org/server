@@ -1,120 +1,7 @@
 import { DB } from '@je-es/sdb';
+import { I18nManager, I18nConfig } from '@minejs/i18n';
+export { I18nConfig, I18nManager, LazyLoader, TranslationSet, TranslationToken, fetchTranslations, getI18n, getLanguage, getSupportedLanguages, loadLanguage, loadTranslations, setLanguage, setupAuto, setupI18n, setupLazy, t, tLang, tParse } from '@minejs/i18n';
 export { ColumnDefinition, ColumnType, DB, QueryBuilder, SqlValue, TableSchema, WhereCondition, blob, column, defaultValue, index, integer, notNull, numeric, primaryKey, real, references, table, text, unique } from '@minejs/db';
-
-declare class I18nManager {
-    private translations;
-    private currentLanguage;
-    private defaultLanguage;
-    private supportedLanguages;
-    private cachePath;
-    constructor(config?: I18nConfig);
-    /**
-     * Load translations for a specific language
-     * @param lang Language code (e.g., 'en', 'ar', 'fr')
-     * @param translations Translation object (can be nested)
-     */
-    loadLanguage(lang: string, translations: Record<string, any>): void;
-    /**
-     * Flatten nested object into dot notation
-     * @param obj Nested object
-     * @param prefix Current prefix
-     * @returns Flattened object with dot notation keys
-     */
-    private flattenObject;
-    /**
-     * Load all translations from static files
-     * @param translations Object with language codes as keys and translation objects as values
-     */
-    loadTranslations(translations: Record<string, Record<string, any>>): void;
-    /**
-     * Set the current language
-     * @param lang Language code
-     */
-    setLanguage(lang: string): void;
-    /**
-     * Get the current language
-     */
-    getLanguage(): string;
-    /**
-     * Get all supported languages
-     */
-    getSupportedLanguages(): string[];
-    /**
-     * Translate a key with smart parameter replacement
-     * Supports nested translation keys as parameter values
-     *
-     * @example
-     * // Simple translation
-     * t('button.login') // => "Login" or "دخـول"
-     *
-     * @example
-     * // With parameters
-     * t('nav.credits', { count: '100' })
-     * // => "Available Credits: 100"
-     *
-     * @example
-     * // With nested translation keys as parameters
-     * t('language.switching_to', { language: 'button.login' })
-     * // => "Switching to Login..."
-     *
-     * @param key Translation key (dot-notation for nested keys)
-     * @param params Optional parameters for replacement
-     * @param defaultValue Optional default value
-     * @returns Translated string with replaced parameters
-     */
-    t(key: string, params?: Record<string, string>, defaultValue?: string): string;
-    private getTranslation;
-    /**
-     * Translate with a specific language (overrides current language temporarily)
-     *
-     * @param key Translation key
-     * @param lang Language code
-     * @param params Optional parameters
-     * @returns Translated string
-     */
-    tLang(key: string, lang: string, params?: Record<string, string>): string;
-    /**
-     * Get all translations for current language
-     */
-    getTranslations(): Record<string, string>;
-    /**
-     * Check if a translation key exists
-     * @param key Translation key
-     * @returns true if key exists in current or default language
-     */
-    hasKey(key: string): boolean;
-}
-/**
- * Initialize the i18n manager
- * @param config I18n configuration
- * @returns I18nManager instance
- */
-declare function initI18n(config?: I18nConfig): I18nManager;
-/**
- * Get the global i18n instance
- */
-declare function getI18n(): I18nManager;
-/**
- * Global translation function
- * @param key Translation key (supports dot notation for nested keys)
- * @param params Optional parameters
- * @param defaultValue Optional default value
- * @returns Translated string
- */
-declare function t(key: string, params?: Record<string, string>, defaultValue?: string): string;
-/**
- * Set the current language globally
- * @param lang Language code
- */
-declare function setLanguage(lang: string): void;
-/**
- * Get the current language
- */
-declare function getCurrentLanguage(): string;
-/**
- * Get all supported languages
- */
-declare function getSupportedLanguages(): string[];
 
 // src/types.d.ts
 //
@@ -277,14 +164,6 @@ declare function getSupportedLanguages(): string[];
         level?: LogLevel;
         pretty?: boolean;
     }
-
-    interface I18nConfig {
-        defaultLanguage?    : string;
-        supportedLanguages? : string[];
-        staticPath?         : string;  // Path to static i18n files
-    }
-
-    type TranslationSet = Record<string, Record<string, string>>;
 
     interface ServerConfig {
         port?           : number | string;
@@ -508,4 +387,4 @@ declare function createStatic(config: StaticConfig): StaticFileServer;
 
 declare function server(config?: ServerConfig): ServerInstance;
 
-export { type AppContext, AppError, type AppMiddleware, type AuthConfig, type CookieOptions, type CorsConfig, type CsrfConfig, type DatabaseConfig, DatabaseError, type HelmetConfig, type HttpMethod, type I18nConfig, I18nManager, type LogLevel, Logger, type LoggingConfig, type RateLimitConfig, RateLimitError, type RouteDefinition, type RouteHandler$1 as RouteHandler, Router, type SecurityConfig, SecurityManager, type ServerConfig, type ServerInstance, type StaticConfig, StaticFileServer, TimeoutError, type TranslationSet, ValidationError, type ValidationSchema, createStatic, server as default, getCurrentLanguage, getI18n, getSupportedLanguages, initI18n, server, setLanguage, t };
+export { type AppContext, AppError, type AppMiddleware, type AuthConfig, type CookieOptions, type CorsConfig, type CsrfConfig, type DatabaseConfig, DatabaseError, type HelmetConfig, type HttpMethod, type LogLevel, Logger, type LoggingConfig, type RateLimitConfig, RateLimitError, type RouteDefinition, type RouteHandler$1 as RouteHandler, Router, type SecurityConfig, SecurityManager, type ServerConfig, type ServerInstance, type StaticConfig, StaticFileServer, TimeoutError, ValidationError, type ValidationSchema, createStatic, server as default, server };

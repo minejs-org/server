@@ -7,7 +7,7 @@
 // ╔════════════════════════════════════════ PACK ════════════════════════════════════════╗
 
     import { DB } from '@je-es/sdb';
-    import type { I18nManager } from './mod/i18n';
+    import type { I18nManager, I18nConfig, TranslationSet } from '@minejs/i18n';
 
 // ╚══════════════════════════════════════════════════════════════════════════════════════╝
 
@@ -164,14 +164,6 @@
         level?: LogLevel;
         pretty?: boolean;
     }
-
-    export interface I18nConfig {
-        defaultLanguage?    : string;
-        supportedLanguages? : string[];
-        staticPath?         : string;  // Path to static i18n files
-    }
-
-    export type TranslationSet = Record<string, Record<string, string>>;
 
     export interface ServerConfig {
         port?           : number | string;

@@ -8,10 +8,10 @@
 </div>
 
 <div align="center">
-    <img src="https://img.shields.io/badge/v-0.0.2-black"/>
+    <img src="https://img.shields.io/badge/v-0.0.3-black"/>
     <img src="https://img.shields.io/badge/🔥-@minejs-black"/>
     <br>
-    <img src="https://img.shields.io/badge/coverage-94.71%25-brightgreen" alt="Test Coverage" />
+    <img src="https://img.shields.io/badge/coverage-98.88%25-brightgreen" alt="Test Coverage" />
     <img src="https://img.shields.io/github/issues/minejs-org/server?style=flat" alt="Github Repo Issues" />
     <img src="https://img.shields.io/github/stars/minejs-org/server?style=social" alt="GitHub Repo stars" />
 </div>
@@ -367,24 +367,37 @@
         - ### 11. Internationalization (i18n)
 
             ```typescript
-            import { server, type AppContext } from '@minejs/server'
+            import { server, type AppContext, setupAuto, setLanguage } from '@minejs/server'
 
             const app = server({
                 port: 3000,
                 i18n: {
                     defaultLanguage: 'en',
-                    supportedLanguages: ['en', 'ar', 'fr'],
-                    staticPath: './src/i18n'
+                    supportedLanguages: ['en', 'ar', 'fr']
                 },
+                
+                onStartup: async () => {
+                    // Auto-setup: Automatically detects server environment and loads from files
+                    // On server: Reads from ./translations/en.json
+                    // On browser: Fetches from http://localhost:3000/translations/en.json
+                    await setupAuto({
+                        defaultLanguage: 'en',
+                        supportedLanguages: ['en', 'ar', 'fr'],
+                        basePath: './translations/',
+                        fileExtension: 'json'
+                    })
+                },
+                
                 routes: [
                     {
                         method: 'GET',
                         path: '/greeting',
                         handler: (c: AppContext) => {
                             const language = c.lang  // Detected from query, cookie, or header
+                            // Use c.i18n?.t() to translate with context
                             return c.json({ 
                                 language,
-                                greeting: 'Hello' 
+                                greeting: c.i18n?.t('greeting') || 'Hello' 
                             })
                         }
                     }
@@ -393,6 +406,27 @@
 
             await app.start()
             // Language detection priority: ?lang query param > lang cookie > Accept-Language header > default
+            ```
+
+            **Translation file structure:**
+            ```
+            your-app/
+            ├── src/
+            │   └── main.ts
+            ├── translations/
+            │   ├── en.json
+            │   ├── ar.json
+            │   └── fr.json
+            └── package.json
+            ```
+
+            **translations/en.json:**
+            ```json
+            {
+                "greeting": "Hello",
+                "farewell": "Goodbye",
+                "welcome": "Welcome, {name}!"
+            }
             ```
 
         - ### 12. Logging

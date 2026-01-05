@@ -12,7 +12,7 @@
     import { Logger }       	        from './mod/logger';
     import * as types                   from './types.d';
     import { StaticFileServer }         from './mod/static';
-    import { initI18n, I18nManager }    from './mod/i18n';
+    import { getI18n, I18nManager }     from '@minejs/i18n';
 
 // ╚══════════════════════════════════════════════════════════════════════════════════════╝
 
@@ -44,12 +44,8 @@
 		// ════════ i18n Configuration ════════
 		let i18n: I18nManager | null = null;
 		if (config.i18n) {
-			const i18nCfg = typeof config.i18n === 'object' ? config.i18n : {};
-			i18n = initI18n({
-				defaultLanguage: i18nCfg.defaultLanguage || 'en',
-				supportedLanguages: i18nCfg.supportedLanguages || ['en', 'ar', 'fr'],
-				staticPath: i18nCfg.staticPath || './src/frontend/static/i18n'
-			});
+			i18n = getI18n();
+			// The i18n instance is now available and can be initialized with languages as needed
 		}
 
 		const dbs                       = new Map<string, sdb.DB>();
@@ -424,27 +420,14 @@
             bunServer   : null,
 
             async start() {
-                // Load i18n translations from static files
-                if (i18n && config.i18n) {
-                    const i18nCfg = typeof config.i18n === 'object' ? config.i18n : {};
-                    const staticPath = i18nCfg.staticPath || './src/frontend/static/i18n';
-                    const supportedLangs = i18nCfg.supportedLanguages || ['en', 'ar', 'fr'];
-
-                    try {
-                        for (const lang of supportedLangs) {
-                            const filePath = `${staticPath}/${lang}.json`;
-                            const file = Bun.file(filePath);
-
-                            if (await file.exists()) {
-                                const data = await file.json() as Record<string, string>;
-                                i18n.loadLanguage(lang, data);
-                            }
-                        }
-
-                        logger?.info({ languages: i18n.getSupportedLanguages() }, 'i18n translations loaded');
-                    } catch (error) {
-                        logger?.warn({ error: String(error) }, 'Failed to load i18n translations');
-                    }
+                // Initialize i18n if enabled
+                if (i18n) {
+                    await i18n.init();
+                    // Use setupAuto in onStartup hook to automatically load translations
+                    // from local files on server or remote URLs on browser
+                    // Example in onStartup:
+                    // const { setupAuto } = await import('@minejs/i18n')
+                    // await setupAuto({ defaultLanguage: 'en', basePath: './translations/' })
                 }
 
                 if (config.database) {
@@ -903,15 +886,23 @@
     export { StaticFileServer, createStatic } from './mod/static';
     export type { StaticConfig } from './mod/static';
     export {
-        initI18n,
         getI18n,
         t,
+        tLang,
+        tParse,
         setLanguage,
-        getCurrentLanguage,
+        getLanguage,
         getSupportedLanguages,
-        I18nManager
-    } from './mod/i18n';
-    export type { I18nConfig, TranslationSet } from './mod/i18n';
+        loadLanguage,
+        loadTranslations,
+        setupI18n,
+        setupLazy,
+        setupAuto,
+        fetchTranslations,
+        I18nManager,
+        LazyLoader
+    } from '@minejs/i18n';
+    export type { I18nConfig, TranslationSet, TranslationToken } from '@minejs/i18n';
 
     export default server;
 
