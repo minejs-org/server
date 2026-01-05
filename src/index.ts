@@ -1,4 +1,4 @@
-// src/main.ts
+// src/index.ts
 //
 // Developed with ❤️ by Maysara.
 
@@ -10,7 +10,7 @@
     import { Router }                   from './mod/router';
     import { SecurityManager }          from './mod/security';
     import { Logger }       	        from './mod/logger';
-    import * as types                   from './types.d';
+    import * as types                   from './types';
     import { StaticFileServer }         from './mod/static';
     import { getI18n, I18nManager }     from '@minejs/i18n';
 
@@ -855,7 +855,7 @@
 
 // ╔════════════════════════════════════════ ════ ════════════════════════════════════════╗
 
-    export * from './types.d';
+    export * from './types';
     export { Logger };
     export { SecurityManager };
     export { Router };

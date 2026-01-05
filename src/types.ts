@@ -1,13 +1,13 @@
-import { DB } from '@je-es/sdb';
-import { I18nManager, I18nConfig } from '@minejs/i18n';
-export { I18nConfig, I18nManager, LazyLoader, TranslationSet, TranslationToken, fetchTranslations, getI18n, getLanguage, getSupportedLanguages, loadLanguage, loadTranslations, setLanguage, setupAuto, setupI18n, setupLazy, t, tLang, tParse } from '@minejs/i18n';
-export { ColumnDefinition, ColumnType, DB, QueryBuilder, SqlValue, TableSchema, WhereCondition, blob, column, defaultValue, index, integer, notNull, numeric, primaryKey, real, references, table, text, unique } from '@minejs/db';
-
-// src/types.d.ts
+// src/types.ts
 //
 // Developed with ❤️ by Maysara.
 
 
+
+// ╔════════════════════════════════════════ PACK ════════════════════════════════════════╗
+
+    import { DB } from '@minejs/db';
+    import type { I18nManager, I18nConfig } from '@minejs/i18n';
 
 // ╚══════════════════════════════════════════════════════════════════════════════════════╝
 
@@ -16,11 +16,11 @@ export { ColumnDefinition, ColumnType, DB, QueryBuilder, SqlValue, TableSchema, 
 // ╔════════════════════════════════════════ TYPE ════════════════════════════════════════╗
 
 
-    type HttpMethod      = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH' | 'OPTIONS' | 'HEAD';
-    type RouteHandler$1    = (c: AppContext) => Response | Promise<Response>;
-    type AppMiddleware   = (c: AppContext, next: () => Promise<void>) => void | Promise<void>;
+    export type HttpMethod      = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH' | 'OPTIONS' | 'HEAD';
+    export type RouteHandler    = (c: AppContext) => Response | Promise<Response>;
+    export type AppMiddleware   = (c: AppContext, next: () => Promise<void>) => void | Promise<void>;
 
-    interface AppContext {
+    export interface AppContext {
         ip              : string;
         request         : Request;
         params          : Record<string, string>;
@@ -30,7 +30,7 @@ export { ColumnDefinition, ColumnType, DB, QueryBuilder, SqlValue, TableSchema, 
         body            : any;
         headers         : Headers;
         db              : DB | undefined;
-        logger          : Logger$1 | null;
+        logger          : Logger | null;
         i18n            : I18nManager | null;
         lang?           : string;
         user?           : unknown;
@@ -62,7 +62,7 @@ export { ColumnDefinition, ColumnType, DB, QueryBuilder, SqlValue, TableSchema, 
         _setCookieHeaders(): Record<string, string | string[]>;
     }
 
-    interface StaticConfig$1 {
+    export interface StaticConfig {
         path            : string;        // URL path prefix (e.g., '/public' or '/static')
         directory       : string;        // Local directory to serve from
         maxAge?         : number;        // Cache control in seconds (default: 3600)
@@ -76,7 +76,7 @@ export { ColumnDefinition, ColumnType, DB, QueryBuilder, SqlValue, TableSchema, 
         setHeaders?     : (ctx: AppContext, path: string) => void;  // Custom header setter
     }
 
-    interface CookieOptions {
+    export interface CookieOptions {
         maxAge?         : number;
         expires?        : Date;
         path?           : string;
@@ -86,16 +86,16 @@ export { ColumnDefinition, ColumnType, DB, QueryBuilder, SqlValue, TableSchema, 
         sameSite?       : 'Strict' | 'Lax' | 'None';
     }
 
-    interface ValidationSchema {
+    export interface ValidationSchema {
         body?: unknown;
         query?: unknown;
         params?: unknown;
     }
 
-    interface RouteDefinition {
+    export interface RouteDefinition {
         method          : HttpMethod | HttpMethod[];
         path            : string;
-        handler         : RouteHandler$1;
+        handler         : RouteHandler;
         validate?       : ValidationSchema;
         middlewares?    : AppMiddleware[];
         timeout?        : number;
@@ -105,14 +105,14 @@ export { ColumnDefinition, ColumnType, DB, QueryBuilder, SqlValue, TableSchema, 
     }
 
     // Database types
-    interface DatabaseConfig {
+    export interface DatabaseConfig {
         name?           : string;
         connection      : string;    // File path or ':memory:'
         schema?         : Record<string, unknown>;
         timeout?        : number;
     }
 
-    interface SecurityConfig {
+    export interface SecurityConfig {
         cors?           : boolean | CorsConfig;
         rateLimit?      : boolean | RateLimitConfig;
         csrf?           : boolean | CsrfConfig;
@@ -122,7 +122,7 @@ export { ColumnDefinition, ColumnType, DB, QueryBuilder, SqlValue, TableSchema, 
         sanitize?       : boolean;
     }
 
-    interface CorsConfig {
+    export interface CorsConfig {
         origin?         : string | string[] | ((origin: string) => boolean);
         methods?        : HttpMethod[];
         allowedHeaders? : string[];
@@ -130,20 +130,20 @@ export { ColumnDefinition, ColumnType, DB, QueryBuilder, SqlValue, TableSchema, 
         maxAge?         : number;
     }
 
-    interface RateLimitConfig {
+    export interface RateLimitConfig {
         windowMs?       : number;
         max?            : number;
         keyGenerator?   : (c: AppContext) => string;
         message?        : string;
     }
 
-    interface CsrfConfig {
+    export interface CsrfConfig {
         secret?         : string;
         headerName?     : string;
         tokenTTL?       : number;
     }
 
-    interface HelmetConfig {
+    export interface HelmetConfig {
         contentSecurityPolicy?  : Record<string, string[]> | boolean;
         hsts?                   : boolean | { maxAge?: number; includeSubDomains?: boolean; preload?: boolean };
         frameguard?             : boolean | { action: 'deny' | 'sameorigin' };
@@ -152,20 +152,20 @@ export { ColumnDefinition, ColumnType, DB, QueryBuilder, SqlValue, TableSchema, 
         referrerPolicy?         : string | boolean;
     }
 
-    interface AuthConfig {
+    export interface AuthConfig {
         jwt?            : boolean | { secret: string; expiresIn?: string };
         apiKey?         : boolean | { header?: string };
         bearer?         : boolean;
     }
 
-    type LogLevel = 'debug' | 'info' | 'warn' | 'error';
+    export type LogLevel = 'debug' | 'info' | 'warn' | 'error';
 
-    interface LoggingConfig {
+    export interface LoggingConfig {
         level?: LogLevel;
         pretty?: boolean;
     }
 
-    interface ServerConfig {
+    export interface ServerConfig {
         port?           : number | string;
         hostname?       : string;
         requestTimeout? : number;
@@ -184,7 +184,7 @@ export { ColumnDefinition, ColumnType, DB, QueryBuilder, SqlValue, TableSchema, 
         i18n?           : boolean | I18nConfig;
 
         // Static file serving
-        static?         : StaticConfig$1 | StaticConfig$1[];
+        static?         : StaticConfig | StaticConfig[];
 
         routes?         : RouteDefinition[];
         middlewares?    : AppMiddleware[];
@@ -203,9 +203,9 @@ export { ColumnDefinition, ColumnType, DB, QueryBuilder, SqlValue, TableSchema, 
         gracefulShutdownTimeout?: number;
     }
 
-    interface ServerInstance {
+    export interface ServerInstance {
         app             : unknown;
-        logger          : Logger$1 | null;
+        logger          : Logger | null;
         db              : Map<string, unknown>;
         bunServer       : unknown;
         start           : () => Promise<void>;
@@ -215,7 +215,7 @@ export { ColumnDefinition, ColumnType, DB, QueryBuilder, SqlValue, TableSchema, 
         getRoutes       : () => RouteDefinition[];
     }
 
-    interface Logger$1 {
+    export interface Logger {
         debug   (data: unknown, msg?: string): void;
         info    (data: unknown, msg?: string): void;
         warn    (data: unknown, msg?: string): void;
@@ -223,168 +223,39 @@ export { ColumnDefinition, ColumnType, DB, QueryBuilder, SqlValue, TableSchema, 
         fatal   (data: unknown, msg?: string): void;
     }
 
-    declare class AppError extends Error {
+    export class AppError extends Error {
         constructor(public message: string, public statusCode: number = 500, public code?: string) {
             super(message);
             this.name = 'AppError';
         }
     }
 
-    declare class ValidationError extends AppError {
+    export class ValidationError extends AppError {
         constructor(message: string, public issues?: unknown) {
             super(message, 400, 'VALIDATION_ERROR');
             this.name = 'ValidationError';
         }
     }
 
-    declare class DatabaseError extends AppError {
+    export class DatabaseError extends AppError {
         constructor(message: string) {
             super(message, 500, 'DATABASE_ERROR');
             this.name = 'DatabaseError';
         }
     }
 
-    declare class TimeoutError extends AppError {
+    export class TimeoutError extends AppError {
         constructor(message = 'Request timeout') {
             super(message, 408, 'TIMEOUT_ERROR');
             this.name = 'TimeoutError';
         }
     }
 
-    declare class RateLimitError extends AppError {
+    export class RateLimitError extends AppError {
         constructor(message = 'Too many requests') {
             super(message, 429, 'RATE_LIMIT_ERROR');
             this.name = 'RateLimitError';
         }
     }
 
-type RouteHandler = (ctx: AppContext) => Response | Promise<Response>;
-interface RouteMatch {
-    handler: RouteHandler;
-    params: Record<string, string>;
-    metadata?: unknown;
-}
-interface RouteInfo {
-    method: string;
-    path: string;
-    handler: RouteHandler;
-}
-declare class Router {
-    private routes;
-    private regexRoutes;
-    match(method: string, path: string): RouteMatch | null;
-    getAll(): RouteInfo[];
-    clear(): void;
-    remove(method: string, path: string): boolean;
-    register(method: string, path: string, handler: RouteHandler, metadata?: unknown): void;
-    private pathToRegex;
-}
-
-interface RequestLogEntry {
-    timestamp: string;
-    method: string;
-    path: string;
-    ip: string;
-    status: number;
-    duration: number;
-}
-interface SecurityStats {
-    rateLimitEntries: number;
-    csrfTokens: number;
-    requestLogs: number;
-}
-declare class SecurityManager {
-    private rateLimitStore;
-    private csrfTokens;
-    private requestLog;
-    private readonly MAX_REQUEST_LOG_SIZE;
-    checkRateLimit(key: string, max: number, windowMs: number): boolean;
-    cleanupRateLimit(): void;
-    generateCsrfToken(sessionId: string, ttl?: number): string;
-    validateCsrfToken(token: string, sessionId: string): boolean;
-    cleanupCsrfTokens(): void;
-    sanitizeHtml(html: string): string;
-    sanitizeSql(input: string): string;
-    logRequest(id: string, method: string, path: string, ip: string, status: number, duration: number): void;
-    getRequestLog(id: string): RequestLogEntry | undefined;
-    getAllRequestLogs(): RequestLogEntry[];
-    clearAll(): void;
-    getStats(): SecurityStats;
-}
-
-declare class Logger {
-    private level;
-    private pretty;
-    private prefix;
-    private levels;
-    private colors;
-    constructor(level?: 'debug' | 'info' | 'warn' | 'error', pretty?: boolean, prefix?: string);
-    debug(data: unknown, msg?: string): void;
-    info(data: unknown, msg?: string): void;
-    warn(data: unknown, msg?: string): void;
-    error(data: unknown, msg?: string): void;
-    fatal(data: unknown, msg?: string): void;
-    child(prefix: string): Logger;
-    private log;
-    private prettyLog;
-    private colorizeMethod;
-    private colorizeStatus;
-    private getLevelIcon;
-    private getLevelColor;
-}
-
-interface StaticConfig {
-    path: string;
-    directory: string;
-    maxAge?: number;
-    index?: string[];
-    dotfiles?: 'allow' | 'deny' | 'ignore';
-    etag?: boolean;
-    lastModified?: boolean;
-    immutable?: boolean;
-    extensions?: string[];
-    fallthrough?: boolean;
-    setHeaders?: (ctx: AppContext, path: string) => void;
-}
-declare class StaticFileServer {
-    private config;
-    private resolvedDir;
-    private fileCache;
-    private readonly CACHE_MAX_SIZE;
-    constructor(config: StaticConfig);
-    /**
-     * Create request handler for static files
-     */
-    handler(): (ctx: AppContext) => Promise<Response>;
-    /**
-     * Get URL path pattern for router
-     */
-    getPathPattern(): string;
-    private resolveFilePath;
-    private isPathSafe;
-    private serveDirectory;
-    private serveFile;
-    private buildHeaders;
-    private generateEtag;
-    private getMimeType;
-    private handleNotFound;
-    /**
-     * Clear file cache
-     */
-    clearCache(): void;
-    /**
-     * Get cache statistics
-     */
-    getCacheStats(): {
-        entries: number;
-        maxSize: number;
-    };
-}
-/**
- * Helper function to create static file server
- */
-declare function createStatic(config: StaticConfig): StaticFileServer;
-
-declare function server(config?: ServerConfig): ServerInstance;
-
-export { type AppContext, AppError, type AppMiddleware, type AuthConfig, type CookieOptions, type CorsConfig, type CsrfConfig, type DatabaseConfig, DatabaseError, type HelmetConfig, type HttpMethod, type LogLevel, Logger, type LoggingConfig, type RateLimitConfig, RateLimitError, type RouteDefinition, type RouteHandler$1 as RouteHandler, Router, type SecurityConfig, SecurityManager, type ServerConfig, type ServerInstance, type StaticConfig, StaticFileServer, TimeoutError, ValidationError, type ValidationSchema, createStatic, server as default, server };
+// ╚══════════════════════════════════════════════════════════════════════════════════════╝

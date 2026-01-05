@@ -8,7 +8,7 @@
 </div>
 
 <div align="center">
-    <img src="https://img.shields.io/badge/v-0.0.3-black"/>
+    <img src="https://img.shields.io/badge/v-0.0.4-black"/>
     <img src="https://img.shields.io/badge/🔥-@minejs-black"/>
     <br>
     <img src="https://img.shields.io/badge/coverage-98.88%25-brightgreen" alt="Test Coverage" />
@@ -412,7 +412,7 @@
             ```
             your-app/
             ├── src/
-            │   └── main.ts
+            │   └── index.ts
             ├── translations/
             │   ├── en.json
             │   ├── ar.json

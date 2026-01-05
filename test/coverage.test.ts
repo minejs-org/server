@@ -10,7 +10,7 @@
 	import { describe, test, expect }               from 'bun:test';
 	import {
         server, type AppContext, DatabaseError, TimeoutError, RateLimitError
-    }                                               from '../src/main';
+    }                                               from '../src';
 	import { mkdirSync, writeFileSync, rmSync }     from 'fs';
 	import { join }                                 from 'path';
 	import { StaticFileServer }                     from '../src/mod/static';
@@ -65,7 +65,7 @@
 		});
 	});
 
-	describe('Main.ts Lines 48-49', () => {
+	describe('index.ts Lines 48-49', () => {
 		test('handles logging as boolean true', async () => {
 			const app = server({
 				port: 3263,
@@ -78,7 +78,7 @@
 		});
 	});
 
-	describe('Main.ts Lines 270-274 (Database Error)', () => {
+	describe('index.ts Lines 270-274 (Database Error)', () => {
 		test('handles database connection error', async () => {
 			let errorThrown = false;
 
@@ -101,7 +101,7 @@
 		});
 	});
 
-	describe('Main.ts Lines 319, 322-326 (Shutdown with Active Requests)', () => {
+	describe('index.ts Lines 319, 322-326 (Shutdown with Active Requests)', () => {
 		test('waits for active requests during shutdown', async () => {
 			const app = server({
 				port: 3265,
@@ -168,7 +168,7 @@
 		});
 	});
 
-	describe('Main.ts Lines 348-349, 351-353, 355-357 (Database Close Errors)', () => {
+	describe('index.ts Lines 348-349, 351-353, 355-357 (Database Close Errors)', () => {
 		test('handles database close errors gracefully', async () => {
 			const app = server({
 				port: 3267,
@@ -196,7 +196,7 @@
 		});
 	});
 
-	describe('Main.ts Line 377 (No Bun Server Stop)', () => {
+	describe('index.ts Line 377 (No Bun Server Stop)', () => {
 		test('handles missing bun server stop method', async () => {
 			const app = server({
 				port: 3268,
@@ -216,7 +216,7 @@
 		});
 	});
 
-	describe('Main.ts Line 431 (No Logger)', () => {
+	describe('index.ts Line 431 (No Logger)', () => {
 		test('addRoute works without logger', async () => {
 			const app = server({
 				port: 3269,
@@ -238,7 +238,7 @@
 		});
 	});
 
-	describe('Main.ts Line 451 (File Response)', () => {
+	describe('index.ts Line 451 (File Response)', () => {
 		test('file() method returns file response', async () => {
 			const testFile = './test-file-coverage.txt';
 			writeFileSync(testFile, 'Test file content');
@@ -268,7 +268,7 @@
 		});
 	});
 
-	describe('Main.ts Line 464 (Cookie with Path)', () => {
+	describe('index.ts Line 464 (Cookie with Path)', () => {
 		test('deleteCookie with custom path', async () => {
 			const app = server({
 				port: 3271,
@@ -297,7 +297,7 @@
 		});
 	});
 
-	describe('Main.ts Lines 513-514 (JSON Parse Error)', () => {
+	describe('index.ts Lines 513-514 (JSON Parse Error)', () => {
 		test('logs JSON parse error with body preview', async () => {
 			const app = server({
 				port: 3272,
@@ -328,7 +328,7 @@
 		});
 	});
 
-	describe('Main.ts Lines 558-564 (Cookie Parsing Edge Cases)', () => {
+	describe('index.ts Lines 558-564 (Cookie Parsing Edge Cases)', () => {
 		test('parseCookies handles cookies without value', async () => {
 			const app = server({
 				port: 3273,
@@ -360,7 +360,7 @@
 		});
 	});
 
-	describe('Main.ts Lines 640-641, 654-655, 658 (IP Extraction)', () => {
+	describe('index.ts Lines 640-641, 654-655, 658 (IP Extraction)', () => {
 		test('getClientIp handles x-forwarded-for with multiple IPs', async () => {
 			const app = server({
 				port: 3274,
@@ -728,8 +728,8 @@
 		});
 	});
 
-	describe('Remaining Main.ts Lines', () => {
-		test('main.ts line 48-49: logging with object but no level', async () => {
+	describe('Remaining index.ts Lines', () => {
+		test('index.ts line 48-49: logging with object but no level', async () => {
 			const app = server({
 				port: 3287,
 				logging: {
@@ -743,7 +743,7 @@
 			await app.stop();
 		});
 
-		test('main.ts line 319: graceful shutdown logs waiting message', async () => {
+		test('index.ts line 319: graceful shutdown logs waiting message', async () => {
 			const app = server({
 				port: 3288,
 				logging: {
@@ -776,7 +776,7 @@
 			expect(true).toBe(true);
 		});
 
-		test('main.ts line 431: addRoute with logger enabled', async () => {
+		test('index.ts line 431: addRoute with logger enabled', async () => {
 			const app = server({
 				port: 3289,
 				logging: {
@@ -800,7 +800,7 @@
 			await app.stop();
 		});
 
-		test('main.ts line 451: file method with custom content type', async () => {
+		test('index.ts line 451: file method with custom content type', async () => {
 			const testFile = './test-custom-type.json';
 			writeFileSync(testFile, JSON.stringify({ test: 'data' }));
 
@@ -826,7 +826,7 @@
 			rmSync(testFile);
 		});
 
-		test('main.ts line 464: deleteCookie with only name parameter', async () => {
+		test('index.ts line 464: deleteCookie with only name parameter', async () => {
 			const app = server({
 				port: 3291,
 				logging: false,
@@ -854,7 +854,7 @@
 			await app.stop();
 		});
 
-		test('main.ts lines 513-514: JSON parse with very long body preview', async () => {
+		test('index.ts lines 513-514: JSON parse with very long body preview', async () => {
 			const app = server({
 				port: 3292,
 				logging: {
@@ -885,7 +885,7 @@
 			await app.stop();
 		});
 
-		test('main.ts lines 654-655, 658: getClientIp with server context', async () => {
+		test('index.ts lines 654-655, 658: getClientIp with server context', async () => {
 			const app = server({
 				port: 3293,
 				logging: false,
@@ -1100,7 +1100,7 @@
 		});
 	});
 
-	describe('Main.ts Line 48-49 (Logging Config)', () => {
+	describe('index.ts Line 48-49 (Logging Config)', () => {
 		test('logging: true creates logger with defaults', async () => {
 			const app = server({
 				port: 3301,
@@ -1141,7 +1141,7 @@
 		});
 	});
 
-	describe('Main.ts Line 319 (Graceful Shutdown Logging)', () => {
+	describe('index.ts Line 319 (Graceful Shutdown Logging)', () => {
 		test('logs "Waiting for active requests..." message', async () => {
 			const app = server({
 				port: 3304,
@@ -1181,7 +1181,7 @@
 		});
 	});
 
-	describe('Main.ts Line 431 (Logger Info)', () => {
+	describe('index.ts Line 431 (Logger Info)', () => {
 		test('addRoute logs when logger is present', async () => {
 			const app = server({
 				port: 3305,
@@ -1209,7 +1209,7 @@
 		});
 	});
 
-	describe('Main.ts Line 451 (File Method)', () => {
+	describe('index.ts Line 451 (File Method)', () => {
 		test('ctx.file() returns file response', async () => {
 			const testFile = './test-file-final.json';
 			writeFileSync(testFile, JSON.stringify({ test: 'data' }));
@@ -1240,7 +1240,7 @@
 		});
 	});
 
-	describe('Main.ts Line 464 (Delete Cookie Path)', () => {
+	describe('index.ts Line 464 (Delete Cookie Path)', () => {
 		test('deleteCookie without options uses default path', async () => {
 			const app = server({
 				port: 3307,
@@ -1297,7 +1297,7 @@
 		});
 	});
 
-	describe('Main.ts Lines 513-514 (Body Preview)', () => {
+	describe('index.ts Lines 513-514 (Body Preview)', () => {
 		test('logs body preview on JSON parse error', async () => {
 			const app = server({
 				port: 3309,
@@ -1330,7 +1330,7 @@
 		});
 	});
 
-	describe('Main.ts Lines 654-655, 658 (IP Extraction)', () => {
+	describe('index.ts Lines 654-655, 658 (IP Extraction)', () => {
 		test('getClientIp extracts from x-forwarded-for', async () => {
 			const app = server({
 				port: 3310,
