@@ -1,0 +1,8 @@
+node_modules
+.git
+.npmrc
+docs
+src
+lib
+test
+assets

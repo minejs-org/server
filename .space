@@ -1,0 +1,23 @@
+{
+	"type"              : "lib",
+	"template"          : "clean",
+	"pm"                : "bun",
+	"repo"              : {
+		"org"           : "minejs",
+		"name"          : "server",
+		"version"       : "0.0.1",
+		"desc"          : "A lightweight, type-safe HTTP server framework for Bun with built-in security, routing, and database support.",
+		"kw"            : ["minejs", "server"],
+		"license"       : "MIT",
+		"issues"        : "https://github.com/minejs-org/server/issues",
+		"homepage"      : "https://github.com/minejs-org/server#readme",
+		"git_url"       : "git+https://github.com/minejs-org/server.git"
+	},
+	"author"            : {
+		"id"            : "maysara-elshewehy",
+		"name"          : "Maysara",
+		"email"         : "maysara.elshewehy@gmail.com",
+		"url"           : "https://github.com/maysara-elshewehy"
+	},
+	"createdAt"         : "2026-01-05T01:10:21.246Z"
+}
