@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // src/index.ts
 //
 // Developed with ❤️ by Maysara.
@@ -12,7 +13,7 @@
     import { Logger }       	        from './mod/logger';
     import * as types                   from './types';
     import { StaticFileServer }         from './mod/static';
-    import { getI18n, I18nManager, setupI18n }     from '@minejs/i18n';
+    import { getI18n, I18nConfig, I18nManager, setupI18n }     from '@minejs/i18n';
 
 // ╚══════════════════════════════════════════════════════════════════════════════════════╝
 
@@ -43,14 +44,15 @@
 
 		// ════════ i18n Configuration ════════
 		let i18n: I18nManager | null = null;
-		if (config.i18n) {
-			i18n = getI18n();
-            if(i18n) await setupI18n(config.i18n === true ? {
+        let i18nConfig: I18nConfig | null = null;
+        if (config.i18n) {
+            i18n = getI18n();
+            i18nConfig = config.i18n === true ? {
                 defaultLanguage     : 'en',
                 supportedLanguages  : ['en'],
-            } : config.i18n);
-            // console.log(`translations:`, i18n.getSupportedLanguages().join(', '));
-			// The i18n instance is now available and can be initialized with languages as needed
+            } : config.i18n;
+
+            if(i18n) await setupI18n(i18nConfig);
 		}
 
 		const dbs                       = new Map<string, sdb.DB>();
@@ -126,10 +128,13 @@
                 const parsedRequestCookies = parseCookies(cookieHeader);
                 const cookieLang = parsedRequestCookies.get('lang');
 
-                let requestLang = (query.lang as string) || cookieLang || request.headers.get('Accept-Language')?.split(',')[0]?.split('-')[0] || 'en';
-                if (i18n && !i18n.getSupportedLanguages().includes(requestLang)) {
-                    requestLang = i18n.getLanguage();
+                let requestLang = (query.lang as string) || cookieLang || request.headers.get('Accept-Language')?.split(',')[0]?.split('-')[0] || (i18nConfig?.defaultLanguage || 'en');
+
+                // Validate against supported languages from config
+                if (i18nConfig && i18nConfig.supportedLanguages && !i18nConfig.supportedLanguages.includes(requestLang)) {
+                    requestLang = i18nConfig.defaultLanguage || 'en';
                 }
+
                 if (i18n) {
                     i18n.setLanguage(requestLang);
                 }
@@ -137,7 +142,7 @@
                 // Match route
                 const routeMatch = router.match(method, path);
                 if (!routeMatch) {
-                    const ctx = createAppContext(ip, request, {}, defaultDb, logger, requestId, i18n, requestLang);
+                    const ctx = createAppContext(ip, request, {}, defaultDb, logger, requestId, i18n, requestLang, i18nConfig);
                     logger?.warn({ requestId, method, path, ip }, 'Route not found');
 
                     // Call onError handler if provided
@@ -153,7 +158,7 @@
                     return ctx.json({ error: 'Not Found', path }, 404);
                 }
 
-                const ctx = createAppContext(ip, request, routeMatch.params || {}, defaultDb, logger, requestId, i18n, requestLang);
+                const ctx = createAppContext(ip, request, routeMatch.params || {}, defaultDb, logger, requestId, i18n, requestLang, i18nConfig);
                 ctx.body = body;
                 ctx.request = request;
 
@@ -634,7 +639,8 @@
         logger      : Logger | null,
         requestId   : string,
         i18nMgr     : I18nManager | null = null,
-        lang        : string = 'en'
+        lang        : string = 'en',
+        i18nCfg     : I18nConfig | null = null
     ): types.AppContext {
         const url           = new URL(request.url);
         const query         = Object.fromEntries(url.searchParams);
@@ -642,6 +648,13 @@
         let statusCode      = 200;
         const cookieStore   = new Map<string, string>();
         const parsedCookies = parseCookies(headers.get('cookie') || '');
+
+        // Create a wrapper for i18n that returns correct supported languages
+        const i18nWrapper = i18nMgr ? {
+            ...i18nMgr,
+            getSupportedLanguages: () => i18nCfg?.supportedLanguages || i18nMgr.getSupportedLanguages(),
+            getLanguage: () => lang || i18nMgr.getLanguage()
+        } : null;
 
         const ctx: types.AppContext = {
             ip,
@@ -651,7 +664,7 @@
             headers,
             db,
             logger,
-            i18n: i18nMgr,
+            i18n: i18nWrapper as any,
             lang,
             requestId,
             get statusCode() { return statusCode; },

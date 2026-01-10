@@ -1,6 +1,6 @@
 {
 	"name"                             : "@minejs/server",
-	"version"                          : "0.0.7",
+	"version"                          : "0.0.8",
 	"description"                      : "A lightweight, type-safe HTTP server framework for Bun with built-in security, routing, and database support.",
 	"keywords"                         : ["minejs", "server"],
 	"license"                          : "MIT",
