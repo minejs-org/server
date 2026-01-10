@@ -7,7 +7,7 @@
 // ╔════════════════════════════════════════ PACK ════════════════════════════════════════╗
 
 	import { describe, test, expect, beforeAll, afterAll } from 'bun:test';
-	import { server, type ServerInstance, StaticFileServer } from '../src/main';
+	import { server, type ServerInstance, StaticFileServer } from '../src';
 	import { mkdirSync, writeFileSync, rmSync } from 'fs';
 	import { join } from 'path';
 
@@ -67,7 +67,7 @@
 			writeFileSync(join(testDir, 'index.html'), '<h1>Index</h1>');
 			writeFileSync(join(testDir, 'test.txt'), 'Test file');
 
-			app = server({
+			app = await server({
 				port: 3236,
 				logging: false,
 				static: {
@@ -108,7 +108,7 @@
 			writeFileSync(join(testDir, 'index.html'), '<h1>Root Index</h1>');
 			writeFileSync(join(testDir, 'file.txt'), 'Root file');
 
-			app = server({
+			app = await server({
 				port: 3237,
 				logging: false,
 				static: {
@@ -141,7 +141,7 @@
 			mkdirSync(testDir, { recursive: true });
 			writeFileSync(join(testDir, 'test.txt'), 'Test content');
 
-			app = server({
+			app = await server({
 				port: 3238,
 				logging: false,
 				static: {
@@ -173,7 +173,7 @@
 			mkdirSync(testDir, { recursive: true });
 			writeFileSync(join(testDir, '.hidden'), 'Hidden content');
 
-			app = server({
+			app = await server({
 				port: 3239,
 				logging: false,
 				static: {
@@ -204,7 +204,7 @@
 			mkdirSync(testDir, { recursive: true });
 			writeFileSync(join(testDir, '.hidden'), 'Hidden content');
 
-			app = server({
+			app = await server({
 				port: 3240,
 				logging: false,
 				static: {
@@ -237,7 +237,7 @@
 			mkdirSync(testDir, { recursive: true });
 			writeFileSync(join(testDir, 'safe.txt'), 'Safe file');
 
-			app = server({
+			app = await server({
 				port: 3241,
 				logging: false,
 				static: {
@@ -269,7 +269,7 @@
 			mkdirSync(testDir, { recursive: true });
 			writeFileSync(join(testDir, 'test.txt'), 'Test');
 
-			app = server({
+			app = await server({
 				port: 3242,
 				logging: false,
 				static: {
@@ -301,7 +301,7 @@
 			writeFileSync(join(testDir, 'test.txt'), 'Test content');
 			writeFileSync(join(testDir, 'page.html'), '<h1>Page</h1>');
 
-			app = server({
+			app = await server({
 				port: 3243,
 				logging: false,
 				static: {
@@ -334,7 +334,7 @@
 			mkdirSync(testDir, { recursive: true });
 			writeFileSync(join(testDir, 'test.txt'), 'Test content');
 
-			app = server({
+			app = await server({
 				port: 3244,
 				logging: false,
 				static: {
@@ -392,7 +392,7 @@
 			mkdirSync(testDir, { recursive: true });
 			writeFileSync(join(testDir, 'test.txt'), 'Test');
 
-			app = server({
+			app = await server({
 				port: 3245,
 				logging: false,
 				static: {
@@ -431,7 +431,7 @@
 			mkdirSync(testDir, { recursive: true });
 			writeFileSync(join(testDir, 'test.txt'), 'Test');
 
-			app = server({
+			app = await server({
 				port: 3246,
 				logging: false,
 				static: {
@@ -461,7 +461,7 @@
 			writeFileSync(join(testDir, 'test.js'), 'console.log("test")');
 			writeFileSync(join(testDir, 'test.css'), 'body { margin: 0; }');
 
-			app = server({
+			app = await server({
 				port: 3247,
 				logging: false,
 				static: {
@@ -488,7 +488,7 @@
 			mkdirSync(testDir, { recursive: true });
 			writeFileSync(join(testDir, 'test.txt'), 'Test');
 
-			app = server({
+			app = await server({
 				port: 3248,
 				logging: false,
 				static: {

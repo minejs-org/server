@@ -8,7 +8,7 @@
 // ╔════════════════════════════════════════ PACK ════════════════════════════════════════╗
 
 	import { describe, test, expect, beforeAll, afterAll } from 'bun:test';
-	import { server, type ServerInstance } from '../src/main';
+	import { server, type ServerInstance } from '../src';
 
 // ╚══════════════════════════════════════════════════════════════════════════════════════╝
 
@@ -21,7 +21,7 @@
 		const baseUrl = 'http://localhost:3249';
 
 		beforeAll(async () => {
-			app = server({
+			app = await server({
 				port: 3249,
 				logging: false
 			});
@@ -78,7 +78,7 @@
 		const baseUrl = 'http://localhost:3250';
 
 		beforeAll(async () => {
-			app = server({
+			app = await server({
 				port: 3250,
 				logging: false,
 				database: {
@@ -108,7 +108,7 @@
 		const baseUrl = 'http://localhost:3251';
 
 		beforeAll(async () => {
-			app = server({
+			app = await server({
 				port: 3251,
 				logging: false
 			});
@@ -140,7 +140,7 @@
 
 	describe('Server Lifecycle - Configuration', () => {
 		test('accepts custom port and hostname', async () => {
-			const app = server({
+			const app = await server({
 				port: 3252,
 				hostname: 'localhost',
 				logging: false
@@ -155,14 +155,14 @@
 		});
 
 		test('uses default values when config is empty', async () => {
-			const app = server({});
+			const app = await server({});
 
 			expect(app.logger).toBe(null);
 			expect(app.db.size).toBe(0);
 		});
 
 		test('accepts custom timeouts', async () => {
-			const app = server({
+			const app = await server({
 				port: 3253,
 				requestTimeout: 5000,
 				gracefulShutdownTimeout: 2000,
@@ -189,7 +189,7 @@
 		test('calls onStartup handler', async () => {
 			let startupCalled = false;
 
-			const app = server({
+			const app = await server({
 				port: 3254,
 				logging: false,
 				onStartup: async () => {
@@ -206,7 +206,7 @@
 		test('passes app instance to onStartup handler', async () => {
 			let receivedApp: any = null;
 
-			const app = server({
+			const app = await server({
 				port: 3254,
 				logging: false,
 				onStartup: async (appInstance: any) => {
@@ -224,7 +224,7 @@
 		});
 
 		test('handles error in startup handler', async () => {
-			const app = server({
+			const app = await server({
 				port: 3254,
 				logging: false,
 				onStartup: async () => {
@@ -249,7 +249,7 @@
 		test('calls onShutdown handler', async () => {
 			let shutdownCalled = false;
 
-			const app = server({
+			const app = await server({
 				port: 3255,
 				logging: false,
 				onShutdown: async () => {
@@ -264,7 +264,7 @@
 		});
 
 		test('handles error in shutdown handler', async () => {
-			const app = server({
+			const app = await server({
 				port: 3256,
 				logging: false,
 				onShutdown: async () => {
@@ -287,7 +287,7 @@
 
 	describe('Server Lifecycle - API Configuration', () => {
 		test('accepts apiPrefix and apiVersion', async () => {
-			const app = server({
+			const app = await server({
 				port: 3257,
 				apiPrefix: '/v2',
 				apiVersion: 'v2',

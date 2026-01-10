@@ -7,7 +7,7 @@
 // ╔════════════════════════════════════════ PACK ════════════════════════════════════════╗
 
 	import { describe, test, expect } from 'bun:test';
-	import { server, type ServerInstance, table, integer, text, primaryKey, notNull } from '../src/main';
+	import { server, type ServerInstance, table, integer, text, primaryKey, notNull } from '../src';
 
 // ╚══════════════════════════════════════════════════════════════════════════════════════╝
 
@@ -20,7 +20,7 @@
 		test('onReady is called after server and databases are initialized', async () => {
 			const readyCalls: unknown[] = [];
 
-			app = server({
+			app = await server({
 				port: 3258,
 				logging: false,
 				routes: [
@@ -56,7 +56,7 @@
 
 			const readyData: unknown = {};
 
-			app = server({
+			app = await server({
 				port: 3259,
 				logging: false,
 				database: {
@@ -88,7 +88,7 @@
 				routeName: null
 			};
 
-			app = server({
+			app = await server({
 				port: 3260,
 				logging: false,
 				routes: [
@@ -125,7 +125,7 @@
 		test('onReady is called after onStartup', async () => {
 			const callOrder: string[] = [];
 
-			app = server({
+			app = await server({
 				port: 3261,
 				logging: false,
 				routes: [],
@@ -146,7 +146,7 @@
 		test('onReady handles errors gracefully', async () => {
 			const errorHandled: unknown = {};
 
-			app = server({
+			app = await server({
 				port: 3262,
 				logging: false,
 				routes: [],
@@ -176,7 +176,7 @@
 
 			const dbNames: string[] = [];
 
-			app = server({
+			app = await server({
 				port: 3263,
 				logging: false,
 				database: [

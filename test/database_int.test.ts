@@ -7,7 +7,7 @@
 // ╔════════════════════════════════════════ PACK ════════════════════════════════════════╗
 
 	import { describe, test, expect, beforeAll, afterAll } from 'bun:test';
-	import { server, type ServerInstance, type AppContext, table, integer, text, primaryKey, notNull } from '../src/main';
+	import { server, type ServerInstance, type AppContext, table, integer, text, primaryKey, notNull } from '../src';
 
 // ╚══════════════════════════════════════════════════════════════════════════════════════╝
 
@@ -20,7 +20,7 @@
 		const baseUrl = 'http://localhost:3218';
 
 		beforeAll(async () => {
-			app = server({
+			app = await server({
 				port: 3218,
 				logging: false,
 				database: {
@@ -69,7 +69,7 @@
 		const baseUrl = 'http://localhost:3219';
 
 		beforeAll(async () => {
-			app = server({
+			app = await server({
 				port: 3219,
 				logging: false,
 				database: [
@@ -123,7 +123,7 @@
 				notNull(text('email'))
 			]);
 
-			app = server({
+			app = await server({
 				port: 3220,
 				logging: false,
 				database: {
@@ -184,7 +184,7 @@
 
 	describe('Database Integration - File-based Connection', () => {
 		test('handles file-based database', async () => {
-			const app = server({
+			const app = await server({
 				port: 3221,
 				logging: false,
 				database: {
@@ -210,7 +210,7 @@
 		const baseUrl = 'http://localhost:3222';
 
 		beforeAll(async () => {
-			app = server({
+			app = await server({
 				port: 3222,
 				logging: false,
 				routes: [
@@ -249,7 +249,7 @@
 				integer('price')
 			]);
 
-			app = server({
+			app = await server({
 				port: 3223,
 				logging: false,
 				database: {

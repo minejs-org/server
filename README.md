@@ -8,7 +8,7 @@
 </div>
 
 <div align="center">
-    <img src="https://img.shields.io/badge/v-0.0.5-black"/>
+    <img src="https://img.shields.io/badge/v-0.0.6-black"/>
     <img src="https://img.shields.io/badge/🔥-@minejs-black"/>
     <br>
     <img src="https://img.shields.io/badge/coverage-98.88%25-brightgreen" alt="Test Coverage" />
@@ -48,7 +48,7 @@
             ```typescript
             import { server } from '@minejs/server'
 
-            const app = server({
+            const app = await server({
                 port: 3000,
                 logging: true,
                 routes: [
@@ -68,7 +68,7 @@
             ```typescript
             import { server, type AppContext } from '@minejs/server'
 
-            const app = server({
+            const app = await server({
                 port: 3000,
                 routes: [
                     {
@@ -98,7 +98,7 @@
             ```typescript
             import { server, type AppContext } from '@minejs/server'
 
-            const app = server({
+            const app = await server({
                 port: 3000,
                 routes: [
                     {
@@ -142,7 +142,7 @@
                 await next()
             }
 
-            const app = server({
+            const app = await server({
                 port: 3000,
                 routes: [
                     {
@@ -164,7 +164,7 @@
             ```typescript
             import { server } from '@minejs/server'
 
-            const app = server({
+            const app = await server({
                 port: 3000,
                 logging: true,
                 security: {
@@ -196,7 +196,7 @@
             ```typescript
             import { server, type AppContext } from '@minejs/server'
 
-            const app = server({
+            const app = await server({
                 port: 3000,
                 routes: [
                     {
@@ -243,7 +243,7 @@
             ```typescript
             import { server } from '@minejs/server'
 
-            const app = server({
+            const app = await server({
                 port: 3000,
                 static: {
                     path: '/public',           // URL prefix
@@ -263,7 +263,7 @@
             ```typescript
             import { server, type AppContext } from '@minejs/server'
 
-            const app = server({
+            const app = await server({
                 port: 3000,
                 database: {
                     connection: './data.db',   // SQLite file path
@@ -292,7 +292,7 @@
             ```typescript
             import { server, type AppContext } from '@minejs/server'
 
-            const app = server({
+            const app = await server({
                 port: 3000,
                 routes: [
                     {
@@ -331,7 +331,7 @@
             ```typescript
             import { server, type ServerInstance } from '@minejs/server'
 
-            const app = server({
+            const app = await server({
                 port: 3000,
                 logging: true,
                 
@@ -369,7 +369,7 @@
             ```typescript
             import { server, type AppContext, setupAuto, setLanguage } from '@minejs/server'
 
-            const app = server({
+            const app = await server({
                 port: 3000,
                 i18n: {
                     defaultLanguage: 'en',
@@ -434,7 +434,7 @@
             ```typescript
             import { server } from '@minejs/server'
 
-            const app = server({
+            const app = await server({
                 port: 3000,
                 logging: {
                     level: 'info',  // 'debug' | 'info' | 'warn' | 'error'
@@ -453,7 +453,7 @@
         > Create and configure an HTTP server instance.
 
         ```typescript
-        const app = server({
+        const app = await server({
             port: 3000,
             hostname: 'localhost',
             logging: true,
@@ -716,7 +716,7 @@
         ```typescript
         import { server, AppError, ValidationError } from '@minejs/server'
 
-        const app = server({
+        const app = await server({
             port: 3000,
             routes: [
                 {
@@ -772,7 +772,7 @@
     - ### Multiple Databases
 
         ```typescript
-        const app = server({
+        const app = await server({
             port: 3000,
             database: [
                 { name: 'primary', connection: './primary.db' },
@@ -798,7 +798,7 @@
     - ### Dynamic Routes
 
         ```typescript
-        const app = server({
+        const app = await server({
             port: 3000,
             logging: false,
             routes: [
@@ -821,7 +821,7 @@
     - ### Error Handling
 
         ```typescript
-        const app = server({
+        const app = await server({
             port: 3000,
             errorHandler: async (error, context) => {
                 // Custom error handling

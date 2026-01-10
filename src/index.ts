@@ -12,7 +12,7 @@
     import { Logger }       	        from './mod/logger';
     import * as types                   from './types';
     import { StaticFileServer }         from './mod/static';
-    import { getI18n, I18nManager }     from '@minejs/i18n';
+    import { getI18n, I18nManager, setupI18n }     from '@minejs/i18n';
 
 // ╚══════════════════════════════════════════════════════════════════════════════════════╝
 
@@ -29,7 +29,7 @@
 
 // ╔════════════════════════════════════════ CORE ════════════════════════════════════════╗
 
-    export function server(config: types.ServerConfig = {}): types.ServerInstance {
+    export async function server(config: types.ServerConfig = {}): Promise<types.ServerInstance> {
 
 		// ════════ Configuration ════════
 		const port                      = Number(config.port) || 3000;
@@ -45,6 +45,11 @@
 		let i18n: I18nManager | null = null;
 		if (config.i18n) {
 			i18n = getI18n();
+            if(i18n) await setupI18n(config.i18n === true ? {
+                defaultLanguage     : 'en',
+                supportedLanguages  : ['en'],
+            } : config.i18n);
+            // console.log(`translations:`, i18n.getSupportedLanguages().join(', '));
 			// The i18n instance is now available and can be initialized with languages as needed
 		}
 
@@ -420,16 +425,6 @@
             bunServer   : null,
 
             async start() {
-                // Initialize i18n if enabled
-                if (i18n) {
-                    await i18n.init();
-                    // Use setupAuto in onStartup hook to automatically load translations
-                    // from local files on server or remote URLs on browser
-                    // Example in onStartup:
-                    // const { setupAuto } = await import('@minejs/i18n')
-                    // await setupAuto({ defaultLanguage: 'en', basePath: './translations/' })
-                }
-
                 if (config.database) {
                     const dbConfigs = Array.isArray(config.database) ? config.database : [config.database];
                     for (const dbCfg of dbConfigs) {
@@ -896,11 +891,7 @@
         loadLanguage,
         loadTranslations,
         setupI18n,
-        setupLazy,
-        setupAuto,
-        fetchTranslations,
-        I18nManager,
-        LazyLoader
+        genPageTitle,
     } from '@minejs/i18n';
     export type { I18nConfig, TranslationSet, TranslationToken } from '@minejs/i18n';
 

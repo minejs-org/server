@@ -7,7 +7,7 @@
 // ╔════════════════════════════════════════ PACK ════════════════════════════════════════╗
 
 	import { describe, test, expect } from 'bun:test';
-	import { server, type AppContext } from '../src/main';
+	import { server, type AppContext } from '../src';
 
 // ╚══════════════════════════════════════════════════════════════════════════════════════╝
 
@@ -17,7 +17,7 @@
 
 	describe('Logger Integration - Enabled Logging', () => {
 		test('provides logger instance when enabled', async () => {
-			const app = server({
+			const app = await server({
 				port: 3224,
 				logging: {
 					level: 'info',
@@ -50,7 +50,7 @@
 		});
 
 		test('logger is accessible in route handlers', async () => {
-			const app = server({
+			const app = await server({
 				port: 3225,
 				logging: {
 					level: 'debug',
@@ -83,7 +83,7 @@
 
 	describe('Logger Integration - Disabled Logging', () => {
 		test('logger is null when disabled', async () => {
-			const app = server({
+			const app = await server({
 				port: 3226,
 				logging: false,
 				routes: [
@@ -115,7 +115,7 @@
 
 	describe('Logger Integration - Default Config', () => {
 		test('logging disabled by default', async () => {
-			const app = server({
+			const app = await server({
 				port: 3227,
 				routes: [
 					{
@@ -134,7 +134,7 @@
 
 	describe('Logger Integration - Different Levels', () => {
 		test('supports debug level', async () => {
-			const app = server({
+			const app = await server({
 				port: 3228,
 				logging: {
 					level: 'debug',
@@ -148,7 +148,7 @@
 		});
 
 		test('supports info level', async () => {
-			const app = server({
+			const app = await server({
 				port: 3229,
 				logging: {
 					level: 'info',
@@ -162,7 +162,7 @@
 		});
 
 		test('supports warn level', async () => {
-			const app = server({
+			const app = await server({
 				port: 3230,
 				logging: {
 					level: 'warn',
@@ -176,7 +176,7 @@
 		});
 
 		test('supports error level', async () => {
-			const app = server({
+			const app = await server({
 				port: 3231,
 				logging: {
 					level: 'error',
@@ -192,7 +192,7 @@
 
 	describe('Logger Integration - Pretty Mode', () => {
 		test('enables pretty mode', async () => {
-			const app = server({
+			const app = await server({
 				port: 3232,
 				logging: {
 					level: 'info',
@@ -206,7 +206,7 @@
 		});
 
 		test('disables pretty mode', async () => {
-			const app = server({
+			const app = await server({
 				port: 3233,
 				logging: {
 					level: 'info',
@@ -222,7 +222,7 @@
 
 	describe('Logger Integration - Boolean Config', () => {
 		test('accepts boolean true for logging', async () => {
-			const app = server({
+			const app = await server({
 				port: 3234,
 				logging: true
 			});
@@ -233,7 +233,7 @@
 		});
 
 		test('accepts boolean false for logging', async () => {
-			const app = server({
+			const app = await server({
 				port: 3235,
 				logging: false
 			});

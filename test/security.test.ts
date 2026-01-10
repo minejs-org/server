@@ -7,7 +7,7 @@
 // ╔════════════════════════════════════════ PACK ════════════════════════════════════════╗
 
 	import { describe, test, expect } from 'bun:test';
-	import { server, type AppContext } from '../src/main';
+	import { server, type AppContext } from '../src';
 	import { SecurityManager } from '../src/mod/security';
 
 // ╚══════════════════════════════════════════════════════════════════════════════════════╝
@@ -18,7 +18,7 @@
 
 	describe('Security - CORS', () => {
 		test('CORS - handles with function origin', async () => {
-			const app = server({
+			const app = await server({
 				port: 3207,
 				logging: false,
 				security: {
@@ -54,7 +54,7 @@
 		});
 
 		test('CORS - handles with string origin', async () => {
-			const app = server({
+			const app = await server({
 				port: 3208,
 				logging: false,
 				security: {
@@ -82,7 +82,7 @@
 		});
 
 		test('CORS - handles with default config', async () => {
-			const app = server({
+			const app = await server({
 				port: 3209,
 				logging: false,
 				security: {
@@ -108,7 +108,7 @@
 		});
 
 		test('CORS - handles OPTIONS preflight', async () => {
-			const app = server({
+			const app = await server({
 				port: 3210,
 				logging: false,
 				security: {
@@ -142,7 +142,7 @@
 
 	describe('Security - Rate Limiting', () => {
 		test('allows requests within rate limit', async () => {
-			const app = server({
+			const app = await server({
 				port: 3212,
 				logging: false,
 				security: {
@@ -172,7 +172,7 @@
 		});
 
 		test('blocks requests exceeding rate limit', async () => {
-			const app = server({
+			const app = await server({
 				port: 3213,
 				logging: false,
 				security: {
@@ -202,7 +202,7 @@
 
 	describe('Security - Request Size Limits', () => {
 		test('accepts small payloads', async () => {
-			const app = server({
+			const app = await server({
 				port: 3214,
 				logging: false,
 				maxRequestSize: 1024,
@@ -229,7 +229,7 @@
 		});
 
 		test('rejects large payloads', async () => {
-			const app = server({
+			const app = await server({
 				port: 3215,
 				logging: false,
 				maxRequestSize: 100,
@@ -257,7 +257,7 @@
 		});
 
 		test('handles payload too large in parseBody', async () => {
-			const app = server({
+			const app = await server({
 				port: 3216,
 				logging: false,
 				maxRequestSize: 50,
@@ -287,7 +287,7 @@
 
 	describe('Security - IP Extraction', () => {
 		test('extracts IP from x-real-ip header', async () => {
-			const app = server({
+			const app = await server({
 				port: 3217,
 				logging: false,
 				routes: [

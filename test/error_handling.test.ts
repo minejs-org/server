@@ -7,7 +7,7 @@
 // ╔════════════════════════════════════════ PACK ════════════════════════════════════════╗
 
 	import { describe, test, expect, beforeAll, afterAll } from 'bun:test';
-	import { server, type ServerInstance, type AppContext, ValidationError, AppError } from '../src/main';
+	import { server, type ServerInstance, type AppContext, ValidationError, AppError } from '../src';
 
 // ╚══════════════════════════════════════════════════════════════════════════════════════╝
 
@@ -20,7 +20,7 @@
 		const baseUrl = 'http://localhost:3257';
 
 		beforeAll(async () => {
-			app = server({
+			app = await server({
 				port: 3257,
 				logging: false,
 				routes: [
@@ -82,7 +82,7 @@
 		const baseUrl = 'http://localhost:3258';
 
 		beforeAll(async () => {
-			app = server({
+			app = await server({
 				port: 3258,
 				logging: false,
 				routes: [
@@ -135,7 +135,7 @@
 		const baseUrl = 'http://localhost:3259';
 
 		beforeAll(async () => {
-			app = server({
+			app = await server({
 				port: 3259,
 				logging: false,
 				requestTimeout: 100, // 100ms timeout
@@ -172,7 +172,7 @@
 		const baseUrl = 'http://localhost:3260';
 
 		beforeAll(async () => {
-			app = server({
+			app = await server({
 				port: 3260,
 				logging: false,
 				routes: [
@@ -244,7 +244,7 @@
 
 	describe('Error Handling - Max Request Size', () => {
 		test('accepts small payloads', async () => {
-			const app = server({
+			const app = await server({
 				port: 3261,
 				logging: false,
 				maxRequestSize: 1024,
@@ -271,7 +271,7 @@
 		});
 
 		test('rejects large payloads', async () => {
-			const app = server({
+			const app = await server({
 				port: 3262,
 				logging: false,
 				maxRequestSize: 100,

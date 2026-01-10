@@ -12,9 +12,10 @@
         ".npmignore": true,
         ".vscode": true,
         "node_modules": true,
-        ".gitignore": true,
         "tsup.config.ts": true,
-        "tsconfig.json": true
+        "tsconfig.json": true,
+        ".gitignore": true,
+        "test-db.sqlite": true
     },
     "hide-files.files": [
         "eslint.config.mjs",
@@ -24,8 +25,9 @@
         ".npmignore",
         ".vscode",
         "node_modules",
-        ".gitignore",
         "tsup.config.ts",
-        "tsconfig.json"
+        "tsconfig.json",
+        ".gitignore",
+        "test-db.sqlite"
     ]
 }

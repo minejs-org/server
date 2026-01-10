@@ -67,7 +67,7 @@
 
 	describe('index.ts Lines 48-49', () => {
 		test('handles logging as boolean true', async () => {
-			const app = server({
+			const app = await server({
 				port: 3263,
 				logging: true
 			});
@@ -83,7 +83,7 @@
 			let errorThrown = false;
 
 			try {
-				const app = server({
+				const app = await server({
 					port: 3264,
 					logging: false,
 					database: {
@@ -103,7 +103,7 @@
 
 	describe('index.ts Lines 319, 322-326 (Shutdown with Active Requests)', () => {
 		test('waits for active requests during shutdown', async () => {
-			const app = server({
+			const app = await server({
 				port: 3265,
 				logging: false,
 				gracefulShutdownTimeout: 500,
@@ -137,7 +137,7 @@
 		});
 
 		test('force closes with active requests after timeout', async () => {
-			const app = server({
+			const app = await server({
 				port: 3266,
 				logging: false,
 				gracefulShutdownTimeout: 100, // Short timeout
@@ -170,7 +170,7 @@
 
 	describe('index.ts Lines 348-349, 351-353, 355-357 (Database Close Errors)', () => {
 		test('handles database close errors gracefully', async () => {
-			const app = server({
+			const app = await server({
 				port: 3267,
 				logging: false,
 				database: {
@@ -198,7 +198,7 @@
 
 	describe('index.ts Line 377 (No Bun Server Stop)', () => {
 		test('handles missing bun server stop method', async () => {
-			const app = server({
+			const app = await server({
 				port: 3268,
 				logging: false
 			});
@@ -218,7 +218,7 @@
 
 	describe('index.ts Line 431 (No Logger)', () => {
 		test('addRoute works without logger', async () => {
-			const app = server({
+			const app = await server({
 				port: 3269,
 				logging: false
 			});
@@ -243,7 +243,7 @@
 			const testFile = './test-file-coverage.txt';
 			writeFileSync(testFile, 'Test file content');
 
-			const app = server({
+			const app = await server({
 				port: 3270,
 				logging: false,
 				routes: [
@@ -270,7 +270,7 @@
 
 	describe('index.ts Line 464 (Cookie with Path)', () => {
 		test('deleteCookie with custom path', async () => {
-			const app = server({
+			const app = await server({
 				port: 3271,
 				logging: false,
 				routes: [
@@ -299,7 +299,7 @@
 
 	describe('index.ts Lines 513-514 (JSON Parse Error)', () => {
 		test('logs JSON parse error with body preview', async () => {
-			const app = server({
+			const app = await server({
 				port: 3272,
 				logging: {
 					level: 'warn',
@@ -330,7 +330,7 @@
 
 	describe('index.ts Lines 558-564 (Cookie Parsing Edge Cases)', () => {
 		test('parseCookies handles cookies without value', async () => {
-			const app = server({
+			const app = await server({
 				port: 3273,
 				logging: false,
 				routes: [
@@ -362,7 +362,7 @@
 
 	describe('index.ts Lines 640-641, 654-655, 658 (IP Extraction)', () => {
 		test('getClientIp handles x-forwarded-for with multiple IPs', async () => {
-			const app = server({
+			const app = await server({
 				port: 3274,
 				logging: false,
 				routes: [
@@ -387,7 +387,7 @@
 		});
 
 		test('getClientIp handles empty x-forwarded-for', async () => {
-			const app = server({
+			const app = await server({
 				port: 3275,
 				logging: false,
 				routes: [
@@ -413,7 +413,7 @@
 		});
 
 		test('getClientIp handles requestIP exception', async () => {
-			const app = server({
+			const app = await server({
 				port: 3276,
 				logging: false,
 				routes: [
@@ -443,7 +443,7 @@
 			mkdirSync(testDir, { recursive: true });
 			writeFileSync(join(testDir, 'page.html'), '<h1>HTML Page</h1>');
 
-			const app = server({
+			const app = await server({
 				port: 3277,
 				logging: false,
 				static: {
@@ -472,7 +472,7 @@
 			mkdirSync(testDir, { recursive: true });
 			writeFileSync(join(testDir, 'test.txt'), 'Test');
 
-			const app = server({
+			const app = await server({
 				port: 3278,
 				logging: false,
 				static: {
@@ -497,7 +497,7 @@
 			mkdirSync(testDir, { recursive: true });
 			writeFileSync(join(testDir, 'test.txt'), 'Test');
 
-			const app = server({
+			const app = await server({
 				port: 3279,
 				logging: false,
 				static: {
@@ -528,7 +528,7 @@
 			mkdirSync(testDir, { recursive: true });
 			writeFileSync(join(testDir, 'exists.txt'), 'Exists');
 
-			const app = server({
+			const app = await server({
 				port: 3280,
 				logging: false,
 				static: {
@@ -552,7 +552,7 @@
 			mkdirSync(testDir, { recursive: true });
 			writeFileSync(join(testDir, 'exists.txt'), 'Exists');
 
-			const app = server({
+			const app = await server({
 				port: 3281,
 				logging: false,
 				static: {
@@ -581,7 +581,7 @@
 
 	describe('CORS with Array Origin', () => {
 		test('CORS - handles array origin with unmatched origin', async () => {
-			const app = server({
+			const app = await server({
 				port: 3282,
 				logging: false,
 				security: {
@@ -621,7 +621,7 @@
 			writeFileSync(join(testDir1, 'file1.txt'), 'File 1');
 			writeFileSync(join(testDir2, 'file2.txt'), 'File 2');
 
-			const app = server({
+			const app = await server({
 				port: 3283,
 				logging: false,
 				static: [
@@ -656,7 +656,7 @@
 			let errorThrown = false;
 
 			try {
-				const app = server({
+				const app = await server({
 					port: 3284,
 					logging: false,
 					static: {
@@ -676,7 +676,7 @@
 
 	describe('Multiple Database Configs', () => {
 		test('handles array of database configs', async () => {
-			const app = server({
+			const app = await server({
 				port: 3285,
 				logging: false,
 				database: [
@@ -707,7 +707,7 @@
 			mkdirSync(testDir, { recursive: true });
 			writeFileSync(join(testDir, 'index.html'), '<h1>Directory Index</h1>');
 
-			const app = server({
+			const app = await server({
 				port: 3286,
 				logging: false,
 				static: {
@@ -730,7 +730,7 @@
 
 	describe('Remaining index.ts Lines', () => {
 		test('index.ts line 48-49: logging with object but no level', async () => {
-			const app = server({
+			const app = await server({
 				port: 3287,
 				logging: {
 					pretty: true
@@ -744,7 +744,7 @@
 		});
 
 		test('index.ts line 319: graceful shutdown logs waiting message', async () => {
-			const app = server({
+			const app = await server({
 				port: 3288,
 				logging: {
 					level: 'info',
@@ -777,7 +777,7 @@
 		});
 
 		test('index.ts line 431: addRoute with logger enabled', async () => {
-			const app = server({
+			const app = await server({
 				port: 3289,
 				logging: {
 					level: 'info',
@@ -804,7 +804,7 @@
 			const testFile = './test-custom-type.json';
 			writeFileSync(testFile, JSON.stringify({ test: 'data' }));
 
-			const app = server({
+			const app = await server({
 				port: 3290,
 				logging: false,
 				routes: [
@@ -827,7 +827,7 @@
 		});
 
 		test('index.ts line 464: deleteCookie with only name parameter', async () => {
-			const app = server({
+			const app = await server({
 				port: 3291,
 				logging: false,
 				routes: [
@@ -855,7 +855,7 @@
 		});
 
 		test('index.ts lines 513-514: JSON parse with very long body preview', async () => {
-			const app = server({
+			const app = await server({
 				port: 3292,
 				logging: {
 					level: 'warn',
@@ -886,7 +886,7 @@
 		});
 
 		test('index.ts lines 654-655, 658: getClientIp with server context', async () => {
-			const app = server({
+			const app = await server({
 				port: 3293,
 				logging: false,
 				routes: [
@@ -919,7 +919,7 @@
 			writeFileSync(join(testDir, 'doc.html'), '<h1>Document</h1>');
 			writeFileSync(join(testDir, 'file.txt'), 'Text file');
 
-			const app = server({
+			const app = await server({
 				port: 3294,
 				logging: false,
 				static: {
@@ -956,7 +956,7 @@
 			mkdirSync(testDir, { recursive: true });
 			writeFileSync(join(testDir, 'test.txt'), 'Test');
 
-			const app = server({
+			const app = await server({
 				port: 3295,
 				logging: false,
 				static: {
@@ -976,7 +976,7 @@
 			mkdirSync(testDir, { recursive: true });
 			writeFileSync(join(testDir, 'test.txt'), 'Test');
 
-			const app = server({
+			const app = await server({
 				port: 3296,
 				logging: false,
 				static: {
@@ -996,7 +996,7 @@
 			mkdirSync(testDir, { recursive: true });
 			writeFileSync(join(testDir, 'test.txt'), 'Test');
 
-			const app = server({
+			const app = await server({
 				port: 3297,
 				logging: false,
 				static: {
@@ -1015,7 +1015,7 @@
 
 	describe('Additional Edge Cases', () => {
 		test('handles empty body with POST', async () => {
-			const app = server({
+			const app = await server({
 				port: 3298,
 				logging: false,
 				routes: [
@@ -1042,7 +1042,7 @@
 		});
 
 		test('handles cookie with special characters in value', async () => {
-			const app = server({
+			const app = await server({
 				port: 3299,
 				logging: false,
 				routes: [
@@ -1070,7 +1070,7 @@
 		});
 
 		test('multiple databases with same operations', async () => {
-			const app = server({
+			const app = await server({
 				port: 3300,
 				logging: false,
 				database: [
@@ -1102,7 +1102,7 @@
 
 	describe('index.ts Line 48-49 (Logging Config)', () => {
 		test('logging: true creates logger with defaults', async () => {
-			const app = server({
+			const app = await server({
 				port: 3301,
 				logging: true  // This triggers line 48-49
 			});
@@ -1116,7 +1116,7 @@
 		});
 
 		test('logging: object without level uses default', async () => {
-			const app = server({
+			const app = await server({
 				port: 3302,
 				logging: {
 					// No level - should default to 'info'
@@ -1130,7 +1130,7 @@
 		});
 
 		test('logging: object with empty object', async () => {
-			const app = server({
+			const app = await server({
 				port: 3303,
 				logging: {}  // Empty object - triggers default level
 			});
@@ -1143,7 +1143,7 @@
 
 	describe('index.ts Line 319 (Graceful Shutdown Logging)', () => {
 		test('logs "Waiting for active requests..." message', async () => {
-			const app = server({
+			const app = await server({
 				port: 3304,
 				logging: {
 					level: 'info',
@@ -1183,7 +1183,7 @@
 
 	describe('index.ts Line 431 (Logger Info)', () => {
 		test('addRoute logs when logger is present', async () => {
-			const app = server({
+			const app = await server({
 				port: 3305,
 				logging: {
 					level: 'info',
@@ -1214,7 +1214,7 @@
 			const testFile = './test-file-final.json';
 			writeFileSync(testFile, JSON.stringify({ test: 'data' }));
 
-			const app = server({
+			const app = await server({
 				port: 3306,
 				logging: false,
 				routes: [
@@ -1242,7 +1242,7 @@
 
 	describe('index.ts Line 464 (Delete Cookie Path)', () => {
 		test('deleteCookie without options uses default path', async () => {
-			const app = server({
+			const app = await server({
 				port: 3307,
 				logging: false,
 				routes: [
@@ -1270,7 +1270,7 @@
 		});
 
 		test('deleteCookie with custom path', async () => {
-			const app = server({
+			const app = await server({
 				port: 3308,
 				logging: false,
 				routes: [
@@ -1299,7 +1299,7 @@
 
 	describe('index.ts Lines 513-514 (Body Preview)', () => {
 		test('logs body preview on JSON parse error', async () => {
-			const app = server({
+			const app = await server({
 				port: 3309,
 				logging: {
 					level: 'warn',
@@ -1332,7 +1332,7 @@
 
 	describe('index.ts Lines 654-655, 658 (IP Extraction)', () => {
 		test('getClientIp extracts from x-forwarded-for', async () => {
-			const app = server({
+			const app = await server({
 				port: 3310,
 				logging: false,
 				routes: [
@@ -1378,7 +1378,7 @@
 			writeFileSync(join(testDir, 'page.html'), '<h1>HTML</h1>');
 			writeFileSync(join(testDir, 'doc.txt'), 'Text');
 
-			const app = server({
+			const app = await server({
 				port: 3311,
 				logging: false,
 				static: {
@@ -1431,7 +1431,7 @@
 	describe('Comprehensive Line Coverage', () => {
 		test('ensures all critical paths are executed', async () => {
 			// Test that combines multiple scenarios
-			const app = server({
+			const app = await server({
 				port: 3312,
 				logging: true,  // Line 48-49
 				gracefulShutdownTimeout: 1000,
@@ -1463,7 +1463,7 @@
 		});
 
 		test('cookie edge cases', async () => {
-			const app = server({
+			const app = await server({
 				port: 3313,
 				logging: false,
 				routes: [
@@ -1489,7 +1489,7 @@
 		});
 
 		test('IP extraction all branches', async () => {
-			const app = server({
+			const app = await server({
 				port: 3314,
 				logging: false,
 				routes: [
@@ -1527,7 +1527,7 @@
 		});
 
 		test('JSON parse error with preview (lines 513-514)', async () => {
-			const app = server({
+			const app = await server({
 				port: 3315,
 				logging: true,
 				routes: [
@@ -1566,7 +1566,7 @@
 			writeFileSync(join(staticDir, 'page.html'), '<h1>Test</h1>');
 
 			// Line 48-49: logging: true (boolean, not object)
-			const app = server({
+			const app = await server({
 				port: 3400,
 				hostname: 'localhost',
 				logging: true,  // Boolean true - triggers lines 48-49
@@ -1687,26 +1687,26 @@
 
 		test('explicit line 48-49: logging boolean vs object', async () => {
 			// Test 1: Boolean true
-			const app1 = server({ port: 3401, logging: true });
+			const app1 = await server({ port: 3401, logging: true });
 			await app1.start();
 			expect(app1.logger).not.toBeNull();
 			await app1.stop();
 
 			// Test 2: Empty object (triggers default)
-			const app2 = server({ port: 3402, logging: {} });
+			const app2 = await server({ port: 3402, logging: {} });
 			await app2.start();
 			expect(app2.logger).not.toBeNull();
 			await app2.stop();
 
 			// Test 3: Object without level
-			const app3 = server({ port: 3403, logging: { pretty: false } });
+			const app3 = await server({ port: 3403, logging: { pretty: false } });
 			await app3.start();
 			expect(app3.logger).not.toBeNull();
 			await app3.stop();
 		});
 
 		test('explicit line 319: wait for active requests log', async () => {
-			const app = server({
+			const app = await server({
 				port: 3404,
 				logging: { level: 'info', pretty: false },
 				gracefulShutdownTimeout: 1000,
@@ -1736,7 +1736,7 @@
 		});
 
 		test('explicit line 431: addRoute with logger', async () => {
-			const app = server({
+			const app = await server({
 				port: 3405,
 				logging: { level: 'info', pretty: false }
 			});
@@ -1760,7 +1760,7 @@
 			const file = './test-451.dat';
 			writeFileSync(file, 'data');
 
-			const app = server({
+			const app = await server({
 				port: 3406,
 				routes: [{
 					method: 'GET',
@@ -1778,7 +1778,7 @@
 		});
 
 		test('explicit line 464: deleteCookie path logic', async () => {
-			const app = server({
+			const app = await server({
 				port: 3407,
 				routes: [{
 					method: 'GET',
@@ -1798,7 +1798,7 @@
 		});
 
 		test('explicit lines 513-514: JSON error with body preview', async () => {
-			const app = server({
+			const app = await server({
 				port: 3408,
 				logging: { level: 'warn', pretty: false },
 				routes: [{
@@ -1820,7 +1820,7 @@
 		});
 
 		test('explicit lines 654-655, 658: all IP extraction paths', async () => {
-			const app = server({
+			const app = await server({
 				port: 3409,
 				routes: [{
 					method: 'GET',

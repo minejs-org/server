@@ -8,7 +8,7 @@
 // ╔════════════════════════════════════════ PACK ════════════════════════════════════════╗
 
 	import { describe, test, expect, beforeAll, afterAll } from 'bun:test';
-	import { server, type ServerInstance, type AppContext } from '../src/main';
+	import { server, type ServerInstance, type AppContext } from '../src';
 	import { Router } from '../src/mod/router';
 
 // ╚══════════════════════════════════════════════════════════════════════════════════════╝
@@ -22,7 +22,7 @@
 		const baseUrl = 'http://localhost:3202';
 
 		beforeAll(async () => {
-			app = server({
+			app = await server({
 				port: 3202,
 				logging: false,
 				routes: [

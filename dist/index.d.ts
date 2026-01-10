@@ -1,7 +1,7 @@
 import { DB } from '@minejs/db';
 export { ColumnDefinition, ColumnType, DB, QueryBuilder, SqlValue, TableSchema, WhereCondition, blob, column, defaultValue, index, integer, notNull, numeric, primaryKey, real, references, table, text, unique } from '@minejs/db';
 import { I18nManager, I18nConfig } from '@minejs/i18n';
-export { I18nConfig, I18nManager, LazyLoader, TranslationSet, TranslationToken, fetchTranslations, getI18n, getLanguage, getSupportedLanguages, loadLanguage, loadTranslations, setLanguage, setupAuto, setupI18n, setupLazy, t, tLang, tParse } from '@minejs/i18n';
+export { I18nConfig, TranslationSet, TranslationToken, genPageTitle, getI18n, getLanguage, getSupportedLanguages, loadLanguage, loadTranslations, setLanguage, setupI18n, t, tLang, tParse } from '@minejs/i18n';
 
 type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH' | 'OPTIONS' | 'HEAD';
 type RouteHandler$1 = (c: AppContext) => Response | Promise<Response>;
@@ -327,6 +327,6 @@ declare class StaticFileServer {
  */
 declare function createStatic(config: StaticConfig): StaticFileServer;
 
-declare function server(config?: ServerConfig): ServerInstance;
+declare function server(config?: ServerConfig): Promise<ServerInstance>;
 
 export { type AppContext, AppError, type AppMiddleware, type AuthConfig, type CookieOptions, type CorsConfig, type CsrfConfig, type DatabaseConfig, DatabaseError, type HelmetConfig, type HttpMethod, type LogLevel, Logger, type LoggingConfig, type RateLimitConfig, RateLimitError, type RouteDefinition, type RouteHandler$1 as RouteHandler, Router, type SecurityConfig, SecurityManager, type ServerConfig, type ServerInstance, type StaticConfig, StaticFileServer, TimeoutError, ValidationError, type ValidationSchema, createStatic, server as default, server };

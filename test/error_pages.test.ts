@@ -8,7 +8,7 @@
 // ╔════════════════════════════════════════ PACK ════════════════════════════════════════╗
 
 	import { describe, test, expect, beforeAll, afterAll } from 'bun:test';
-	import { server, type ServerInstance, type AppContext } from '../src/main';
+	import { server, type ServerInstance, type AppContext } from '../src';
 	import { join } from 'path';
 	import { mkdirSync, writeFileSync, rmSync } from 'fs';
 
@@ -29,7 +29,7 @@
 			writeFileSync(join(staticDir, 'index.html'), '<h1>Home</h1>');
 			writeFileSync(join(staticDir, 'style.css'), 'body { color: blue; }');
 
-			app = server({
+			app = await server({
 				port: 3210,
 				logging: false,
 				static: {
@@ -180,7 +180,7 @@
 			mkdirSync(staticDir, { recursive: true });
 			writeFileSync(join(staticDir, 'test.txt'), 'test content');
 
-			app = server({
+			app = await server({
 				port: 3211,
 				logging: false,
 				static: {
@@ -223,7 +223,7 @@
 			mkdirSync(staticDir, { recursive: true });
 			writeFileSync(join(staticDir, 'app.js'), 'console.log("test");');
 
-			app = server({
+			app = await server({
 				port: 3212,
 				logging: false,
 				static: {

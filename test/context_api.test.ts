@@ -7,7 +7,7 @@
 // ╔════════════════════════════════════════ PACK ════════════════════════════════════════╗
 
 	import { describe, test, expect, beforeAll, afterAll } from 'bun:test';
-	import { server, type ServerInstance, type AppContext } from '../src/main';
+	import { server, type ServerInstance, type AppContext } from '../src';
 
 // ╚══════════════════════════════════════════════════════════════════════════════════════╝
 
@@ -20,7 +20,7 @@
 		const baseUrl = 'http://localhost:3203';
 
 		beforeAll(async () => {
-			app = server({
+			app = await server({
 				port: 3203,
 				logging: false,
 				routes: [
@@ -94,7 +94,7 @@
 		const baseUrl = 'http://localhost:3204';
 
 		beforeAll(async () => {
-			app = server({
+			app = await server({
 				port: 3204,
 				logging: false,
 				routes: [
@@ -145,7 +145,7 @@
 		const baseUrl = 'http://localhost:3205';
 
 		beforeAll(async () => {
-			app = server({
+			app = await server({
 				port: 3205,
 				logging: false,
 				routes: [
@@ -298,7 +298,7 @@
 		const baseUrl = 'http://localhost:3206';
 
 		beforeAll(async () => {
-			app = server({
+			app = await server({
 				port: 3206,
 				logging: false,
 				routes: [
