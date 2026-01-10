@@ -1,6 +1,6 @@
 {
 	"name"                             : "@minejs/server",
-	"version"                          : "0.0.6",
+	"version"                          : "0.0.7",
 	"description"                      : "A lightweight, type-safe HTTP server framework for Bun with built-in security, routing, and database support.",
 	"keywords"                         : ["minejs", "server"],
 	"license"                          : "MIT",
@@ -41,7 +41,7 @@
 	},
 	"dependencies": {
 		"@minejs/db"                   : "^0.0.3",
-		"@minejs/i18n"                 : "^0.0.3"
+		"@minejs/i18n"                 : "^0.0.8"
 	},
 	"devDependencies": {
 		"@eslint/js"                   : "^9.39.2",
