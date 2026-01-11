@@ -8,7 +8,7 @@
 </div>
 
 <div align="center">
-    <img src="https://img.shields.io/badge/v-0.0.8-black"/>
+    <img src="https://img.shields.io/badge/v-0.0.9-black"/>
     <a href="https://github.com/minejs-org"><img src="https://img.shields.io/badge/🔥-@minejs-black"/></a>
     <br>
     <img src="https://img.shields.io/badge/coverage-98.78%25-brightgreen" alt="Test Coverage" />

@@ -895,7 +895,6 @@
     export type { StaticConfig } from './mod/static';
     export {
         getI18n,
-        t,
         tLang,
         tParse,
         setLanguage,
@@ -904,9 +903,21 @@
         loadLanguage,
         loadTranslations,
         setupI18n,
-        genPageTitle,
     } from '@minejs/i18n';
     export type { I18nConfig, TranslationSet, TranslationToken } from '@minejs/i18n';
+
+    /**
+     * Get translation string
+     */
+    export function t (key: string, defaultValue?: string) {
+        const i18n = getI18n();
+        if (!i18n) {
+            console.warn('[ServerManager] i18n not initialized. Using default value or key.');
+            return defaultValue ?? key;
+        }
+        return i18n.t(key) ?? defaultValue ?? key;
+    }
+
 
     export default server;
 

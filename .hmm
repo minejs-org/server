@@ -5,7 +5,7 @@
 	"repo"              : {
 		"org"           : "minejs",
 		"name"          : "server",
-		"version"       : "0.0.8",
+		"version"       : "0.0.9",
 		"desc"          : "A lightweight, type-safe HTTP server framework for Bun with built-in security, routing, and database support.",
 		"kw"            : ["minejs", "server"],
 		"license"       : "MIT",
