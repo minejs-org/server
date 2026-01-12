@@ -2,6 +2,7 @@ import { DB } from '@minejs/db';
 export { ColumnDefinition, ColumnType, DB, QueryBuilder, SqlValue, TableSchema, WhereCondition, blob, column, defaultValue, index, integer, notNull, numeric, primaryKey, real, references, table, text, unique } from '@minejs/db';
 import { I18nManager, I18nConfig } from '@minejs/i18n';
 export { I18nConfig, TranslationSet, TranslationToken, getI18n, getLanguage, getSupportedLanguages, loadLanguage, loadTranslations, setLanguage, setupI18n, tLang, tParse } from '@minejs/i18n';
+export { Logger } from '@minejs/logger';
 
 type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH' | 'OPTIONS' | 'HEAD';
 type RouteHandler$1 = (c: AppContext) => Response | Promise<Response>;
@@ -14,7 +15,7 @@ interface AppContext {
     body: any;
     headers: Headers;
     db: DB | undefined;
-    logger: Logger$1 | null;
+    logger: Logger | null;
     i18n: I18nManager | null;
     lang?: string;
     user?: unknown;
@@ -164,7 +165,7 @@ interface ServerConfig {
 }
 interface ServerInstance {
     app: unknown;
-    logger: Logger$1 | null;
+    logger: Logger | null;
     db: Map<string, unknown>;
     bunServer: unknown;
     start: () => Promise<void>;
@@ -173,7 +174,7 @@ interface ServerInstance {
     addRoutes: (routes: RouteDefinition[]) => void;
     getRoutes: () => RouteDefinition[];
 }
-interface Logger$1 {
+interface Logger {
     debug(data: unknown, msg?: string): void;
     info(data: unknown, msg?: string): void;
     warn(data: unknown, msg?: string): void;
@@ -254,27 +255,6 @@ declare class SecurityManager {
     getStats(): SecurityStats;
 }
 
-declare class Logger {
-    private level;
-    private pretty;
-    private prefix;
-    private levels;
-    private colors;
-    constructor(level?: 'debug' | 'info' | 'warn' | 'error', pretty?: boolean, prefix?: string);
-    debug(data: unknown, msg?: string): void;
-    info(data: unknown, msg?: string): void;
-    warn(data: unknown, msg?: string): void;
-    error(data: unknown, msg?: string): void;
-    fatal(data: unknown, msg?: string): void;
-    child(prefix: string): Logger;
-    private log;
-    private prettyLog;
-    private colorizeMethod;
-    private colorizeStatus;
-    private getLevelIcon;
-    private getLevelColor;
-}
-
 interface StaticConfig {
     path: string;
     directory: string;
@@ -334,4 +314,4 @@ declare function server(config?: ServerConfig): Promise<ServerInstance>;
  */
 declare function t(key: string, defaultValue?: string): string;
 
-export { type AppContext, AppError, type AppMiddleware, type AuthConfig, type CookieOptions, type CorsConfig, type CsrfConfig, type DatabaseConfig, DatabaseError, type HelmetConfig, type HttpMethod, type LogLevel, Logger, type LoggingConfig, type RateLimitConfig, RateLimitError, type RouteDefinition, type RouteHandler$1 as RouteHandler, Router, type SecurityConfig, SecurityManager, type ServerConfig, type ServerInstance, type StaticConfig, StaticFileServer, TimeoutError, ValidationError, type ValidationSchema, createStatic, server as default, server, t };
+export { type AppContext, AppError, type AppMiddleware, type AuthConfig, type CookieOptions, type CorsConfig, type CsrfConfig, type DatabaseConfig, DatabaseError, type HelmetConfig, type HttpMethod, type LogLevel, type LoggingConfig, type RateLimitConfig, RateLimitError, type RouteDefinition, type RouteHandler$1 as RouteHandler, Router, type SecurityConfig, SecurityManager, type ServerConfig, type ServerInstance, type StaticConfig, StaticFileServer, TimeoutError, ValidationError, type ValidationSchema, createStatic, server as default, server, t };

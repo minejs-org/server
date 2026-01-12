@@ -8,10 +8,10 @@
 </div>
 
 <div align="center">
-    <img src="https://img.shields.io/badge/v-0.0.9-black"/>
+    <img src="https://img.shields.io/badge/v-0.1.0-black"/>
     <a href="https://github.com/minejs-org"><img src="https://img.shields.io/badge/🔥-@minejs-black"/></a>
     <br>
-    <img src="https://img.shields.io/badge/coverage-98.78%25-brightgreen" alt="Test Coverage" />
+    <img src="https://img.shields.io/badge/coverage-94.29%25-brightgreen" alt="Test Coverage" />
     <img src="https://img.shields.io/github/issues/minejs-org/server?style=flat" alt="Github Repo Issues" />
     <img src="https://img.shields.io/github/stars/minejs-org/server?style=social" alt="GitHub Repo stars" />
 </div>

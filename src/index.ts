@@ -10,7 +10,7 @@
     import * as sdb                     from '@minejs/db';
     import { Router }                   from './mod/router';
     import { SecurityManager }          from './mod/security';
-    import { Logger }       	        from './mod/logger';
+    import { Logger }       	        from '@minejs/logger';
     import * as types                   from './types';
     import { StaticFileServer }         from './mod/static';
     import { getI18n, I18nConfig, I18nManager, setupI18n }     from '@minejs/i18n';
