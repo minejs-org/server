@@ -8,7 +8,7 @@
 </div>
 
 <div align="center">
-    <img src="https://img.shields.io/badge/v-0.1.0-black"/>
+    <img src="https://img.shields.io/badge/v-0.1.2-black"/>
     <a href="https://github.com/minejs-org"><img src="https://img.shields.io/badge/🔥-@minejs-black"/></a>
     <br>
     <img src="https://img.shields.io/badge/coverage-94.29%25-brightgreen" alt="Test Coverage" />
@@ -323,7 +323,6 @@
                 // User & Database
                 c.user              // User object (if set by middleware)
                 c.db                // Database instance
-                c.i18n              // i18n manager
                 c.logger            // Logger instance
 
                 // Response methods
@@ -460,7 +459,7 @@
 
             ```typescript
             handler: (c: AppContext) => {
-                import { t } from '@minejs/i18n';
+                import { t } from '@minejs/server';
 
                 // Current language (auto-detected from ?lang, cookie, or header)
                 const lang = c.lang;
@@ -471,10 +470,7 @@
                 // With parameters
                 const greeting = t('greeting', { name: 'John' });
 
-                // Get supported languages
-                const supported = c.i18n?.getSupportedLanguages();
-
-                return c.json({ message, lang, supported });
+                return c.json({ message, lang });
             }
             ```
 
@@ -558,7 +554,6 @@
                     return c.json({
                         message     : t('hello'),
                         language    : c.lang,
-                        supported   : c.i18n?.getSupportedLanguages()
                     });
                 }
             },
@@ -644,7 +639,6 @@
             // Managers
             db              : DB            | undefined;
             logger          : Logger        | null;
-            i18n            : I18nManager   | null;
 
             // Response methods
             json            (data: unknown, status?: number): Response;

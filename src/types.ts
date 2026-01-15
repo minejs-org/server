@@ -6,8 +6,8 @@
 
 // ╔════════════════════════════════════════ PACK ════════════════════════════════════════╗
 
-    import { DB } from '@minejs/db';
-    import type { I18nManager, I18nConfig } from '@minejs/i18n';
+    import { DB }               from '@minejs/db';
+    import type { I18nConfig }  from '@minejs/i18n';
 
 // ╚══════════════════════════════════════════════════════════════════════════════════════╝
 
@@ -31,7 +31,6 @@
         headers         : Headers;
         db              : DB | undefined;
         logger          : Logger | null;
-        i18n            : I18nManager | null;
         lang?           : string;
         user?           : unknown;
         requestId       : string;

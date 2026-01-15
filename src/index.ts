@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 // src/index.ts
 //
 // Developed with ❤️ by Maysara.
@@ -123,26 +122,16 @@
                 const defaultDb = dbs.get('default');
 
                 // Detect language from request (query param, cookie, header, or default)
-                const query = Object.fromEntries(new URL(request.url).searchParams);
-                const cookieHeader = request.headers.get('cookie') || '';
-                const parsedRequestCookies = parseCookies(cookieHeader);
-                const cookieLang = parsedRequestCookies.get('lang');
-
-                let requestLang = (query.lang as string) || cookieLang || request.headers.get('Accept-Language')?.split(',')[0]?.split('-')[0] || (i18nConfig?.defaultLanguage || 'en');
-
-                // Validate against supported languages from config
-                if (i18nConfig && i18nConfig.supportedLanguages && !i18nConfig.supportedLanguages.includes(requestLang)) {
-                    requestLang = i18nConfig.defaultLanguage || 'en';
-                }
-
-                if (i18n) {
-                    i18n.setLanguage(requestLang);
-                }
+                const query                 = Object.fromEntries(new URL(request.url).searchParams);
+                const cookieHeader          = request.headers.get('cookie') || '';
+                const parsedRequestCookies  = parseCookies(cookieHeader);
+                const cookieLang            = parsedRequestCookies.get('lang');
+                const requestLang           = (query.lang as string) || cookieLang || request.headers.get('Accept-Language')?.split(',')[0]?.split('-')[0] || (i18nConfig?.defaultLanguage || 'en');
 
                 // Match route
                 const routeMatch = router.match(method, path);
                 if (!routeMatch) {
-                    const ctx = createAppContext(ip, request, {}, defaultDb, logger, requestId, i18n, requestLang, i18nConfig);
+                    const ctx = createAppContext(ip, request, {}, defaultDb, logger, requestId, requestLang);
                     logger?.warn({ requestId, method, path, ip }, 'Route not found');
 
                     // Call onError handler if provided
@@ -158,7 +147,7 @@
                     return ctx.json({ error: 'Not Found', path }, 404);
                 }
 
-                const ctx = createAppContext(ip, request, routeMatch.params || {}, defaultDb, logger, requestId, i18n, requestLang, i18nConfig);
+                const ctx = createAppContext(ip, request, routeMatch.params || {}, defaultDb, logger, requestId, requestLang);
                 ctx.body = body;
                 ctx.request = request;
 
@@ -638,9 +627,7 @@
         db          : sdb.DB | undefined,
         logger      : Logger | null,
         requestId   : string,
-        i18nMgr     : I18nManager | null = null,
         lang        : string = 'en',
-        i18nCfg     : I18nConfig | null = null
     ): types.AppContext {
         const url           = new URL(request.url);
         const query         = Object.fromEntries(url.searchParams);
@@ -648,13 +635,6 @@
         let statusCode      = 200;
         const cookieStore   = new Map<string, string>();
         const parsedCookies = parseCookies(headers.get('cookie') || '');
-
-        // Create a wrapper for i18n that returns correct supported languages
-        const i18nWrapper = i18nMgr ? {
-            ...i18nMgr,
-            getSupportedLanguages: () => i18nCfg?.supportedLanguages || i18nMgr.getSupportedLanguages(),
-            getLanguage: () => lang || i18nMgr.getLanguage()
-        } : null;
 
         const ctx: types.AppContext = {
             ip,
@@ -664,7 +644,6 @@
             headers,
             db,
             logger,
-            i18n: i18nWrapper as any,
             lang,
             requestId,
             get statusCode() { return statusCode; },
@@ -895,7 +874,6 @@
     export type { StaticConfig } from './mod/static';
     export {
         getI18n,
-        tLang,
         tParse,
         setLanguage,
         getLanguage,
@@ -916,6 +894,18 @@
             return defaultValue ?? key;
         }
         return i18n.t(key) ?? defaultValue ?? key;
+    }
+
+    /**
+     * Get translation string
+     */
+    export function tLang (lang: string, key: string, defaultValue?: string) {
+        const i18n = getI18n();
+        if (!i18n) {
+            console.warn('[ServerManager] i18n not initialized. Using default value or key.');
+            return defaultValue ?? key;
+        }
+        return i18n.tLang(lang, key) ?? defaultValue ?? key;
     }
 
 
