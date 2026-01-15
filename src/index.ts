@@ -893,7 +893,7 @@
             console.warn('[ServerManager] i18n not initialized. Using default value or key.');
             return defaultValue ?? key;
         }
-        return i18n.t(key) ?? defaultValue ?? key;
+        return i18n.t(key, undefined, defaultValue);
     }
 
     /**
@@ -905,7 +905,7 @@
             console.warn('[ServerManager] i18n not initialized. Using default value or key.');
             return defaultValue ?? key;
         }
-        return i18n.tLang(key, lang) ?? defaultValue ?? key;
+        return i18n.tLang(lang, key, undefined, defaultValue);
     }
 
 
