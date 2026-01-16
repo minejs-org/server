@@ -12,7 +12,7 @@
     import { Logger }       	        from '@minejs/logger';
     import * as types                   from './types';
     import { StaticFileServer }         from './mod/static';
-    import { getI18n, I18nConfig, I18nManager, setupI18n }     from '@minejs/i18n';
+    import { getI18n, I18nConfig, I18nManager, setupI18n, tLangAsync as _tLangAsync } from '@minejs/i18n';
 
 // ╚══════════════════════════════════════════════════════════════════════════════════════╝
 
@@ -908,6 +908,14 @@
         return i18n.tLang(lang, key, undefined, defaultValue);
     }
 
+    export async function tLangAsync (lang: string, key: string, defaultValue?: string) {
+        const i18n = getI18n();
+        if (!i18n) {
+            console.warn('[ServerManager] i18n not initialized. Using default value or key.');
+            return defaultValue ?? key;
+        }
+        return await _tLangAsync(lang, key, undefined, defaultValue);
+    }
 
     export default server;
 
