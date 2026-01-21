@@ -5,7 +5,7 @@
       "name": "@minejs/server",
       "dependencies": {
         "@minejs/db": "^0.0.3",
-        "@minejs/i18n": "^0.1.4",
+        "@minejs/i18n": "^0.1.6",
         "@minejs/logger": "^0.0.2",
       },
       "devDependencies": {
@@ -116,7 +116,7 @@
 
     "@minejs/db": ["@minejs/db@0.0.3", "", { "peerDependencies": { "bun": "^1.3.3" } }, "sha512-BUZZF5g9wXhu2N/bbchDovlGmeG+VDtdGznUR95nG3Bh7p8apXE9HsJhxIwbJ70+/F4a+Yz9PSBFBs6RNOkL6Q=="],
 
-    "@minejs/i18n": ["@minejs/i18n@0.1.4", "", { "peerDependencies": { "bun": "^1.3.3" } }, "sha512-67+zujUMXbmhTLRZhnCXp2PXUK5ZxlbU2uzd4WWbnuhqYT3eaN3azz2yrI9QlqdgQnzcJzCjXpfOVCbaDEQxtw=="],
+    "@minejs/i18n": ["@minejs/i18n@0.1.6", "", { "peerDependencies": { "bun": "^1.3.3" } }, "sha512-LI7Y4SRB8YRxkm7U8/ISE8p0RP3jBepj7HM7gRTpbSgXrpshtyxXZ/NP3PAMg27NjmSIgt/1GSZRYigV59Pulw=="],
 
     "@minejs/logger": ["@minejs/logger@0.0.2", "", { "peerDependencies": { "bun": "^1.3.3" } }, "sha512-fEvGAZOqwhJ+974A5+z1S1mczx/xasIczCIEnnnIYc7FdWZYsh/uGWa28hFmXjpr0RoQB3W89fEWCPfvU3F9hA=="],
 
